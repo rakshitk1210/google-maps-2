@@ -6,7 +6,6 @@ import DiamondIcon from '@mui/icons-material/Diamond'
 import CameraswitchIcon from '@mui/icons-material/Cameraswitch'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import { CAMERA_TITLE, CAPTURE_FALLBACK_IMAGE } from './gemData'
-import { tokens } from './theme'
 
 interface CameraScreenProps {
   onBack: () => void
