@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { Alert } from '@mui/material'
-import { CAFES, CAR_POSITION, KYLE_AVATAR_SEED, MOUNT_RAINIER, YOUR_AVATAR_SEED } from './jamData'
+import { CAFES, CAR_POSITION, KYLE_AVATAR_URL, MOUNT_RAINIER, YOUR_AVATAR_URL } from './jamData'
 import { tokens } from './theme'
 import './mapMarkers.css'
 
@@ -66,8 +66,8 @@ export function MapCanvas({ center, zoom, joined, routeTarget }: MapCanvasProps)
     wrap.className = 'car-marker-wrap'
     wrap.innerHTML = `
       <div class="car-avatars" style="display: none">
-        <img class="car-avatar" src="https://picsum.photos/seed/${YOUR_AVATAR_SEED}/100/100" alt="" />
-        <img class="car-avatar car-avatar-overlap" src="https://picsum.photos/seed/${KYLE_AVATAR_SEED}/100/100" alt="" />
+        <img class="car-avatar" src="${YOUR_AVATAR_URL}" alt="" />
+        <img class="car-avatar car-avatar-overlap" src="${KYLE_AVATAR_URL}" alt="" />
       </div>
       ${CAR_SVG}`
     avatarsRef.current = wrap.querySelector<HTMLDivElement>('.car-avatars')

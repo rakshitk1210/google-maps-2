@@ -3,8 +3,8 @@ export const KYLE_DISPLAY_NAME = 'Kyle'
 export const FULL_TRIP_DURATION = '2 hr 20 min'
 export const FULL_TRIP_DISTANCE_ETA = '84 mi · 5:52 PM'
 export const BANNER_INSTRUCTION = 'toward 11th Ave NE'
-export const YOUR_AVATAR_SEED = 'you'
-export const KYLE_AVATAR_SEED = 'kyle'
+export const YOUR_AVATAR_URL = 'https://randomuser.me/api/portraits/women/44.jpg'
+export const KYLE_AVATAR_URL = 'https://randomuser.me/api/portraits/men/32.jpg'
 export const CAR_POSITION: [number, number] = [-122.3067, 47.6558]
 export const MOUNT_RAINIER: [number, number] = [-121.7603, 46.8523]
 

@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { DESTINATION_NAME, KYLE_AVATAR_SEED, KYLE_DISPLAY_NAME, YOUR_AVATAR_SEED } from './jamData'
+import { DESTINATION_NAME, KYLE_AVATAR_URL, KYLE_DISPLAY_NAME, YOUR_AVATAR_URL } from './jamData'
 import { tokens } from './theme'
 
 interface JamInviteSheetProps {
@@ -39,10 +39,10 @@ export function JamInviteSheet({ onJoin, onDismiss }: JamInviteSheetProps) {
 
       <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pt: '12px' }}>
         <Box sx={{ display: 'flex' }}>
-          <Box component="img" src={`https://picsum.photos/seed/${YOUR_AVATAR_SEED}/100/100`} sx={avatarSx} />
+          <Box component="img" src={YOUR_AVATAR_URL} sx={avatarSx} />
           <Box
             component="img"
-            src={`https://picsum.photos/seed/${KYLE_AVATAR_SEED}/100/100`}
+            src={KYLE_AVATAR_URL}
             sx={{ ...avatarSx, ml: '-14px' }}
           />
         </Box>
