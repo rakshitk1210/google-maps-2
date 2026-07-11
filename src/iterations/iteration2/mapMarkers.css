@@ -1,0 +1,65 @@
+.map-poi-marker {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.roadtrip-marker {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #1a73e8;
+  color: #fff;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.you-are-here-marker {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.you-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  background: #1a73e8;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.you-cone {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle at 50% 100%, rgba(26, 115, 232, 0.35), rgba(26, 115, 232, 0) 70%);
+  transform: translate(-50%, -85%) rotate(200deg);
+  z-index: 1;
+}
+
+.map-canvas {
+  position: absolute;
+  inset: 0;
+}

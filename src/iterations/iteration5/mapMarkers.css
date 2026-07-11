@@ -1,0 +1,39 @@
+.car-marker-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Map-pin element — shadow is allowed here per design.md rule 0.10. */
+.car-svg {
+  display: block;
+  filter: drop-shadow(0 1px 2px rgba(60, 64, 67, 0.3)) drop-shadow(0 2px 6px rgba(60, 64, 67, 0.15));
+}
+
+.car-avatars {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.car-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  /* Map-pin element — soft shadow allowed (design.md rule 0.10). */
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 2px 6px rgba(60, 64, 67, 0.15);
+}
+
+.car-avatar-overlap {
+  margin-left: -8px;
+}
+
+.map-canvas {
+  position: absolute;
+  inset: 0;
+}

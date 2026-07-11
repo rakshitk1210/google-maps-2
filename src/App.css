@@ -1,0 +1,65 @@
+.app-shell {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.iteration-list {
+  width: 260px;
+  flex-shrink: 0;
+  border-right: 1px solid #ddd;
+  padding: 24px 16px;
+  box-sizing: border-box;
+}
+
+.iteration-list-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 16px;
+}
+
+.iteration-list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.iteration-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 14px;
+  border: 1px solid #999;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.iteration-item:hover {
+  background: #f2f2f2;
+}
+
+.iteration-item.selected {
+  border-color: #1a73e8;
+  background: #eaf1fd;
+}
+
+.canvas {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+}
+
+.phone-frame {
+  width: 402px;
+  height: 872px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 28px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  position: relative;
+}
