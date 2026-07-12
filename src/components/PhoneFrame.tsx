@@ -4,6 +4,7 @@ import { GoogleMapsClone as GoogleMapsCloneV3 } from '../iterations/iteration3/G
 import { GoogleMapsClone as GoogleMapsCloneV4 } from '../iterations/iteration4/GoogleMapsClone'
 import { GoogleMapsClone as GoogleMapsCloneV5 } from '../iterations/iteration5/GoogleMapsClone'
 import { GoogleMapsClone as GoogleMapsCloneV6 } from '../iterations/iteration6/GoogleMapsClone'
+import { GoogleMapsClone as GoogleMapsCloneV7 } from '../iterations/iteration7/GoogleMapsClone'
 
 interface PhoneFrameProps {
   iterationId: number
@@ -21,6 +22,7 @@ export function PhoneFrame({ iterationId }: PhoneFrameProps) {
       {iterationId === 3 && <GoogleMapsCloneV3 />}
       {iterationId === 4 && <GoogleMapsCloneV4 />}
       {iterationId === 5 && <GoogleMapsCloneV5 />}
+      {iterationId === 7 && <GoogleMapsCloneV7 />}
     </div>
   )
 }
