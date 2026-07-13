@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, ButtonBase, Typography } from '@mui/material'
 import ExploreIcon from '@mui/icons-material/Explore'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutlineOutlined'
@@ -7,28 +7,36 @@ import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined'
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined'
 import { EASE_OUT, MODE_TRANSITION, NAV_SWAP_MS, useTokens } from './theme'
 
+export type RoadTripTab = 'explore' | 'friends' | 'capture'
+
 interface BottomNavProps {
   roadTrip: boolean
+  activeTab: RoadTripTab
+  onSelectTab: (tab: RoadTripTab) => void
 }
 
 interface TabSpec {
   label: string
   icon: ReactElement
   active?: boolean
+  onClick?: () => void
 }
 
 // design.md §6.4 tab: active gets the 64×32 tonal pill behind a filled icon
 // (13/600 label), inactive is a bare outlined icon (13/500 secondary label).
-function NavTab({ label, icon, active }: TabSpec) {
+function NavTab({ label, icon, active, onClick }: TabSpec) {
   const t = useTokens()
   return (
-    <Box
+    <ButtonBase
+      onClick={onClick}
+      disableRipple
       sx={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         gap: '4px',
         pt: active ? 0 : '4px',
+        borderRadius: '12px',
       }}
     >
       {active ? (
@@ -63,7 +71,7 @@ function NavTab({ label, icon, active }: TabSpec) {
       >
         {label}
       </Typography>
-    </Box>
+    </ButtonBase>
   )
 }
 
@@ -95,10 +103,11 @@ function NavBar({ tabs, shown }: { tabs: TabSpec[]; shown: boolean }) {
 // Both 84px bars (design.md §6.4) stay mounted, stacked at the bottom of the
 // screen. On mode switch the outgoing bar slides down below the frame while
 // the incoming one slides up — 350ms ease-out per the iteration 7 sketch —
-// and rapid re-toggles simply reverse the transforms.
-export function BottomNav({ roadTrip }: BottomNavProps) {
+// and rapid re-toggles simply reverse the transforms. The Road Trip bar's
+// tabs actually switch views; the normal bar stays decorative.
+export function BottomNav({ roadTrip, activeTab, onSelectTab }: BottomNavProps) {
   return (
-    <Box sx={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 84, zIndex: 3, overflow: 'hidden' }}>
+    <Box sx={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 84, zIndex: 5, overflow: 'hidden' }}>
       <NavBar
         shown={!roadTrip}
         tabs={[
@@ -110,9 +119,24 @@ export function BottomNav({ roadTrip }: BottomNavProps) {
       <NavBar
         shown={roadTrip}
         tabs={[
-          { label: 'Explore', icon: <ExploreIcon />, active: true },
-          { label: 'Friends', icon: <GroupAddOutlinedIcon /> },
-          { label: 'Capture', icon: <PhotoCameraOutlinedIcon /> },
+          {
+            label: 'Explore',
+            icon: <ExploreIcon />,
+            active: activeTab === 'explore',
+            onClick: () => onSelectTab('explore'),
+          },
+          {
+            label: 'Friends',
+            icon: <GroupAddOutlinedIcon />,
+            active: activeTab === 'friends',
+            onClick: () => onSelectTab('friends'),
+          },
+          {
+            label: 'Capture',
+            icon: <PhotoCameraOutlinedIcon />,
+            active: activeTab === 'capture',
+            onClick: () => onSelectTab('capture'),
+          },
         ]}
       />
     </Box>

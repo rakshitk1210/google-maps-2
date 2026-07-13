@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import { applyGoogleMapsPalette } from '../../shared/googleMapStyle'
 import { Alert } from '@mui/material'
 import { CAR_POSITION, MEMBER_AVATAR_URLS } from './jamData'
 import type { RouteTarget } from './jamData'
@@ -57,6 +58,8 @@ export function CarPlayMap({ joined, routeTarget }: CarPlayMapProps) {
     }
     mapRef.current = map
 
+    // Google Maps tile palette (design.md §9) over the raw Mapbox style.
+    map.on('style.load', () => applyGoogleMapsPalette(map))
     map.on('load', () => {
       map.resize()
       drawJamRoute(map, ROUTE_SOURCE_ID, ROUTE_LAYER_ID, 'destination', { onError: setError })

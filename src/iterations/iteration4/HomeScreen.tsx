@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import { applyGoogleMapsPalette } from '../../shared/googleMapStyle'
 import { Avatar, Box, Typography } from '@mui/material'
 import MicIcon from '@mui/icons-material/Mic'
 import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong'
@@ -74,6 +75,8 @@ export function HomeScreen() {
       attributionControl: false,
     })
     mapRef.current = map
+    // Google Maps tile palette (design.md §9) over the raw Mapbox style.
+    map.on('style.load', () => applyGoogleMapsPalette(map))
     map.on('load', () => map.resize())
 
     new mapboxgl.Marker({ element: makeGemPin(ALEX_GEM_LABEL), anchor: 'bottom' })

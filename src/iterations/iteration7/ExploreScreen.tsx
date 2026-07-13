@@ -7,7 +7,10 @@ import LocalGasStationIcon from '@mui/icons-material/LocalGasStation'
 import { PhoneStatusBar } from './PhoneStatusBar'
 import { MapCanvas } from './MapCanvas'
 import { BottomNav } from './BottomNav'
+import type { RoadTripTab } from './BottomNav'
 import { RoadTripChip } from './RoadTripChip'
+import { FriendsScreen } from './FriendsScreen'
+import { CaptureScreen } from './CaptureScreen'
 import { MODE_TRANSITION, useTokens } from './theme'
 
 const AVATAR_URL = 'https://randomuser.me/api/portraits/women/44.jpg'
@@ -15,6 +18,8 @@ const AVATAR_URL = 'https://randomuser.me/api/portraits/women/44.jpg'
 interface ExploreScreenProps {
   roadTrip: boolean
   onToggleRoadTrip: () => void
+  activeTab: RoadTripTab
+  onSelectTab: (tab: RoadTripTab) => void
 }
 
 // Explore home per design.md §7 blueprint: live Mapbox base layer (pannable,
@@ -22,7 +27,7 @@ interface ExploreScreenProps {
 // leading it — §6.4 bottom nav, and the §2 location puck riding the map as a
 // marker. Every surface reads mode-reactive tokens and cross-fades over the
 // 350ms flush when Road Trip mode switches.
-export function ExploreScreen({ roadTrip, onToggleRoadTrip }: ExploreScreenProps) {
+export function ExploreScreen({ roadTrip, onToggleRoadTrip, activeTab, onSelectTab }: ExploreScreenProps) {
   const t = useTokens()
 
   const chipSx = {
@@ -126,7 +131,11 @@ export function ExploreScreen({ roadTrip, onToggleRoadTrip }: ExploreScreenProps
         </Box>
       </Box>
 
-      <BottomNav roadTrip={roadTrip} />
+      {/* Road Trip tab panels overlay the map chrome; nav stays on top */}
+      {roadTrip && activeTab === 'friends' && <FriendsScreen />}
+      {roadTrip && activeTab === 'capture' && <CaptureScreen />}
+
+      <BottomNav roadTrip={roadTrip} activeTab={activeTab} onSelectTab={onSelectTab} />
     </Box>
   )
 }

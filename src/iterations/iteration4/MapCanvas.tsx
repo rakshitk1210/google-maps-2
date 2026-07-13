@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import { applyGoogleMapsPalette } from '../../shared/googleMapStyle'
 import { Alert } from '@mui/material'
 import { CAR_POSITION, DESTINATION, GEM_POSITION } from './gemData'
 import { tokens } from './theme'
@@ -68,7 +69,11 @@ export function MapCanvas({ routeTarget, carAtGem, onGemClick, onCarClick }: Map
     }
     mapRef.current = map
 
-    map.on('style.load', () => setStyleReady(true))
+    map.on('style.load', () => {
+      // Google Maps tile palette (design.md §9) over the raw Mapbox style.
+      applyGoogleMapsPalette(map)
+      setStyleReady(true)
+    })
     map.on('load', () => {
       map.resize()
     })

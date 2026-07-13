@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import { applyGoogleMapsPalette } from '../../shared/googleMapStyle'
 import { Alert } from '@mui/material'
 import { CAFES, CAR_POSITION, KYLE_AVATAR_URL, MOUNT_RAINIER, YOUR_AVATAR_URL } from './jamData'
 import { tokens } from './theme'
@@ -53,6 +54,8 @@ export function MapCanvas({ center, zoom, joined, routeTarget }: MapCanvasProps)
     }
     mapRef.current = map
 
+    // Google Maps tile palette (design.md §9) over the raw Mapbox style.
+    map.on('style.load', () => applyGoogleMapsPalette(map))
     map.on('load', () => {
       map.resize()
     })

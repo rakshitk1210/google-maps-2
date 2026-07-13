@@ -255,7 +255,53 @@ Every screen is three layers:
 
 ---
 
-## 9. Pre-ship checklist
+## 9. Map tiles — Google Maps canvas palette (restyling Mapbox)
+
+When an iteration uses a live Mapbox map, restyle the tiles so they read as Google Maps. Values below were pixel-sampled from `Google Maps screenshots/` (IMG_5831 city zoom, IMG_5835 campus, IMG_5867 region zoom). Define once per iteration (e.g. `googleMapStyle.ts`) and apply on `style.load` — never ship raw Mapbox Streets colors.
+
+### Canvas & land
+| Token | Value | Use |
+|---|---|---|
+| `--gm-land` | `#F5F3F3` | Base land — soft warm gray-white, never pure white |
+| `--gm-land-institution` | `#EFECEC` | Campus/school/airport land AND building fills (one step darker than land) |
+| `--gm-land-commercial` | `#F8F0DE` | Commercial corridors (pale wheat) |
+| `--gm-land-hospital` | `#FCE8E6` | Hospital/medical grounds (pale rose) |
+| `--gm-park` | `#C3F1D5` | City-zoom parks, grass, pitches (mint) |
+| `--gm-vegetation` | `#ABEDC8` | Region-zoom forest/vegetation landcover |
+| `--gm-region-urban` | `#F7F7F7` | Region-zoom urban patches |
+| `--gm-water` | `#90DAEE` | All water (light cyan; `#84D7EB` at far zooms — one value is fine) |
+
+### Roads (three-tier hierarchy — this is what sells the look)
+| Token | Value | Use |
+|---|---|---|
+| `--gm-road-minor` | `#D8E0E7` | Local/residential streets — flat light blue-gray, NOT white |
+| `--gm-road-minor-case` | `#C9D3DA` | Minor street edge (subtle) |
+| `--gm-road-arterial` | `#FFFFFF` | Arterials/primaries — white |
+| `--gm-road-arterial-case` | `#D7DBE0` | Arterial casing (blue-gray hairline) |
+| `--gm-road-motorway` | `#9BADCA` | Freeways + ramps — blue-lavender (sampled `#93A6C0`–`#9BADCA`), NOT amber |
+| `--gm-road-motorway-case` | `#C6CFDE` | Freeway shoulder (lighter than fill) |
+| `--gm-path-green` | `#9FD5BC` | Pedestrian paths/trails — thin soft-green lines (campus walks) |
+
+### Map labels
+| Token | Value | Use |
+|---|---|---|
+| `--gm-label-road` | `#46586B` | Street name text (dark slate-blue, white halo) |
+| `--gm-label-place` | `#37404D` | City/settlement names |
+| `--gm-label-district` | `#7A8A98` | Neighborhoods/districts (letterspaced uppercase) |
+| `--gm-label-area` | `#467686` | Campus/area callouts (teal-blue) |
+| `--gm-label-park` | `#12875F` | Park/green-space labels (green) |
+| `--gm-label-water` | `#4593AC` | Water labels (blue, italic feel) |
+
+Application rules:
+- Land classes drive fills (`landuse` match on class): park-ish → `--gm-park`, hospital → `--gm-land-hospital`, school/airport → `--gm-land-institution`, default invisible against `--gm-land`.
+- Buildings are barely-there: fill `#EFECEC`, no strong outline.
+- Hide transit labels; keep rail subtle (`#E1DFDD`).
+- All label halos white.
+- Google never uses Mapbox's amber motorways or dark POI saturation — if the map shows orange freeways, the restyle isn't applied.
+
+---
+
+## 10. Pre-ship checklist
 
 - [ ] Only one `--teal` filled button visible per screen
 - [ ] All pills actually pill-shaped (radius 999), sheets radius 28
@@ -267,4 +313,5 @@ Every screen is three layers:
 - [ ] Shadows only on map pins (soft); all floating UI chrome is flat
 - [ ] Google Sans Flex loaded and applied, tracking tight on titles
 - [ ] Icon buttons in headers are gray circles, not bare glyphs
+- [ ] Live Mapbox tiles restyled per §9 — land `#F5F3F3`, mint parks, cyan water, blue-lavender freeways (no Mapbox amber)
 - [ ] Compare side-by-side against the screenshot for that screen before calling it done
