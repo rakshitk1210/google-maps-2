@@ -8,7 +8,7 @@ interface LocationPuckProps {
 const MORPH_TRANSITION = `transform ${NAV_SWAP_MS}ms ${EASE_OUT}, opacity ${NAV_SWAP_MS}ms ${EASE_OUT}`
 
 // Top-down car from iteration 6's nav maps; in Road Trip mode the car tokens
-// turn it pink (pink body, deep-maroon outline, blush glass).
+// turn it purple (violet body, deep-indigo outline, lilac glass).
 function CarMarker() {
   const t = useTokens()
   return (
@@ -25,7 +25,7 @@ function CarMarker() {
 // which morphs into the car when Road Trip mode switches on: the dot scales up
 // and fades out while the car scales in — 350ms ease-out. Both stay mounted so
 // mid-animation re-toggles reverse smoothly. Per rule 0.10, this is a map
-// element, so it carries the soft pin shadow (plus the pink glow in Road Trip).
+// element, so it carries the soft pin shadow (plus the violet glow in Road Trip).
 // Rendered inside a center-anchored mapboxgl.Marker, so it sizes itself and
 // stays pinned to the location through pans and zooms.
 export function LocationPuck({ roadTrip }: LocationPuckProps) {
@@ -42,7 +42,7 @@ export function LocationPuck({ roadTrip }: LocationPuckProps) {
         pointerEvents: 'none',
       }}
     >
-      {/* Halo — pulses gently; re-tints blue ↔ pink with the mode */}
+      {/* Halo — pulses gently; re-tints blue ↔ purple with the mode */}
       <Box
         sx={{
           position: 'absolute',
@@ -75,7 +75,7 @@ export function LocationPuck({ roadTrip }: LocationPuckProps) {
         }}
       />
 
-      {/* Car — takes over in Road Trip mode with the soft pink glow */}
+      {/* Car — takes over in Road Trip mode with the soft violet glow */}
       <Box
         sx={{
           position: 'absolute',

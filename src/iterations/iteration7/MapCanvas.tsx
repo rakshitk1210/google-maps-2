@@ -14,10 +14,10 @@ mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN
 // U District, Seattle — same neighborhood as iteration 6's demo.
 const CENTER: [number, number] = [-122.3067, 47.6558]
 
-// Diamond for the gem-pin head (iteration 4's marker SVG, pink-filled).
+// Diamond for the gem-pin head (iteration 4's marker SVG, purple-filled).
 const GEM_SVG = `
 <svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <path d="M7 3h10l4 6-9 12L3 9l4-6z" fill="#C2185B"/>
+  <path d="M7 3h10l4 6-9 12L3 9l4-6z" fill="#5B2C9D"/>
   <path d="M7 3l2.5 6L12 3H7zm5 0l2.5 6L17 3h-5zM3 9h6l3 12L3 9zm12 0h6l-9 12 3-12z" fill="rgba(255,255,255,0.25)"/>
 </svg>`
 

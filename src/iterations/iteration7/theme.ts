@@ -4,7 +4,7 @@ import { createTheme, type Theme } from '@mui/material'
 // Iteration 7 has two palettes sharing the design.md §2 slot names: the normal
 // Google blue-green set, and the Road Trip set. Road Trip keeps the map and
 // surfaces at their normal subtle colors and swaps only the primary accents to
-// pink (Gen Z refs: hot/dark pink primaries, mustard pop on the toggle) — the
+// gem purple (royal violet primaries, mustard pop on the toggle) — the
 // active nav pill, the toggle, the Ask Maps accent, and the car.
 export interface Tokens {
   // Ink & surfaces
@@ -88,34 +88,34 @@ export const normalTokens: Tokens = {
   shadowPin: '0 1px 2px rgba(60,64,67,.30), 0 2px 6px 2px rgba(60,64,67,.15)',
 }
 
-// Accents-only pink: everything not listed here stays identical to normal.
+// Accents-only purple: everything not listed here stays identical to normal.
 export const roadTripTokens: Tokens = {
   ...normalTokens,
 
-  // Primary slot: dark pink takes over everywhere dark teal appeared
-  teal: '#C2185B',
-  // Tonal slot: light pink active-nav pill / toggle-chip fill
-  cyanContainer: '#F8BBD0',
-  cyanContainerSoft: '#FCE4EC',
-  onCyan: '#6D0F35',
-  // Ask Maps accent goes hot pink
-  blue: '#D81B60',
+  // Primary slot: deep violet takes over everywhere dark teal appeared
+  teal: '#5B2C9D',
+  // Tonal slot: light lavender active-nav pill / toggle-chip fill
+  cyanContainer: '#E8D5F5',
+  cyanContainerSoft: '#F3E8FB',
+  onCyan: '#3B1A6E',
+  // Ask Maps accent goes gem purple
+  blue: '#7B3FA8',
 
-  puck: '#E91E63',
-  puckHalo: 'rgba(233, 30, 99, 0.20)',
+  puck: '#6A3DB8',
+  puckHalo: 'rgba(106, 61, 184, 0.20)',
 
-  // The pink car (Gen Z ref): pink body, deep-maroon outline, blush glass
-  carBody: '#F06292',
-  carStroke: '#7A1240',
-  carGlass: '#FCE4EC',
-  carRoof: '#F8BBD0',
+  // The purple car: violet body, deep-indigo outline, lilac glass
+  carBody: '#9B6BD6',
+  carStroke: '#3B1A6E',
+  carGlass: '#F3E8FB',
+  carRoof: '#E8D5F5',
 
-  switchTrackOn: '#C2185B',
+  switchTrackOn: '#5B2C9D',
   switchThumbOn: '#EEB23E',
 
-  // Map-pin shadow plus a soft pink glow scoped to the car itself.
+  // Map-pin shadow plus a soft violet glow scoped to the car itself.
   shadowPin:
-    '0 1px 2px rgba(60,64,67,.30), 0 2px 6px 2px rgba(60,64,67,.15), 0 0 14px rgba(233,30,99,0.45)',
+    '0 1px 2px rgba(60,64,67,.30), 0 2px 6px 2px rgba(60,64,67,.15), 0 0 14px rgba(106,61,184,0.45)',
 }
 
 // Motion, design.md §8 — M3 emphasized curve for general transitions.

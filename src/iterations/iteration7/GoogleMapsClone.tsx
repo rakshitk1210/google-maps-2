@@ -6,7 +6,7 @@ import { TokensContext, normalTheme, normalTokens, roadTripTheme, roadTripTokens
 
 // Iteration 7 — Road Trip mode toggle. Phone-only (renders in the shared
 // portrait frame, no CarPlay stage). One piece of state drives everything:
-// the accent flush (blue-green → pink), the bottom-nav swap, and the
+// the accent flush (blue-green → purple), the bottom-nav swap, and the
 // blue-dot → car morph, all over the 350ms ease-out switch. Inside Road Trip
 // mode the nav switches between Explore / Friends / Capture views.
 export function GoogleMapsClone() {

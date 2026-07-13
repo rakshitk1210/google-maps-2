@@ -1,5 +1,5 @@
 /* Gem marker (iteration 4's planted-pin pattern, re-inked for iteration 7's
-   Road Trip pink): the bottom point sits on the coordinate (marker anchor
+   Road Trip purple): the bottom point sits on the coordinate (marker anchor
    'bottom'), a white circular head holds the diamond, and a label pill names
    the friend who left it. A gentle bob on the inner wrapper keeps it feeling
    lively without the urgency of an expanding beacon. */
@@ -21,7 +21,7 @@
   font-weight: 500;
   line-height: 1;
   color: #ffffff;
-  background: #c2185b;
+  background: #5b2c9d;
   padding: 4px 10px;
   border-radius: 999px;
   white-space: nowrap;
@@ -71,7 +71,7 @@
 }
 
 /* Cluster badge — a group of gems too close together at the current zoom.
-   Same white-head language as a single pin, with a pink count chip; tapping
+   Same white-head language as a single pin, with a purple count chip; tapping
    zooms in until the group splits into individual labeled pins. */
 .gem-cluster {
   position: relative;
@@ -100,7 +100,7 @@
   padding: 0 5px;
   box-sizing: border-box;
   border-radius: 999px;
-  background: #c2185b;
+  background: #5b2c9d;
   border: 2px solid #ffffff;
   color: #ffffff;
   font-family: 'Google Sans Flex', 'Google Sans', Roboto, sans-serif;

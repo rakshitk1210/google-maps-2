@@ -8,7 +8,7 @@ interface RoadTripChipProps {
 
 // The iteration 7 mode switch: a 44px pill chip (design.md §6.2) whose
 // trailing element is a scaled-down M3 switch (§6.15). Off it reads as a plain
-// white chip; on it fills with the tonal pink and the thumb pops mustard —
+// white chip; on it fills with the tonal purple and the thumb pops mustard —
 // the Gen Z sticker accent.
 export function RoadTripChip({ on, onToggle }: RoadTripChipProps) {
   const t = useTokens()
