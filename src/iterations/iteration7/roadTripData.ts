@@ -1,7 +1,16 @@
 // Content inside Road Trip mode: the trip fam, the places they marked, the
 // captured/locked moments, and gems left on the map by friends who aren't on
 // this trip. Cafe data mirrors iteration 6's jamData (same Unsplash CDN
-// helper) — iterations stay self-contained.
+// helper). People portraits come from the shared road-trip roster.
+
+import {
+  JOSEPHINE_AVATAR,
+  KELLEY_AVATAR,
+  WINNIE_AVATAR,
+  YOU_AVATAR,
+} from '../../shared/peopleAvatars'
+
+export { YOU_AVATAR }
 
 export interface TripFriend {
   name: string
@@ -9,22 +18,20 @@ export interface TripFriend {
   detail: string
 }
 
-// Index 0 of the randomuser set is "you" (search-bar avatar) — the fam uses
-// the rest of the roster plus one extra portrait.
 export const TRIP_FRIENDS: TripFriend[] = [
   {
     name: 'Josephine',
-    avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
+    avatar: JOSEPHINE_AVATAR,
     detail: 'Riding shotgun · 4 places marked',
   },
   {
     name: 'Winnie',
-    avatar: 'https://randomuser.me/api/portraits/women/21.jpg',
+    avatar: WINNIE_AVATAR,
     detail: 'Snack captain · 2 places marked',
   },
   {
     name: 'Kelley',
-    avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+    avatar: KELLEY_AVATAR,
     detail: 'Driving · made the playlist',
   },
 ]

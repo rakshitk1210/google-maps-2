@@ -19,6 +19,7 @@ import {
   KELLEY_GEM_POSITION,
   SEARCH_PLACEHOLDER,
 } from './gemData'
+import { YOU_AVATAR } from '../../shared/peopleAvatars'
 import { MOTION_EMPHASIZED, tokens } from './theme'
 import './mapMarkers.css'
 
@@ -117,9 +118,7 @@ export function HomeScreen() {
           </Typography>
           <MicIcon sx={{ fontSize: 24, color: tokens.inkSecondary }} />
           <CenterFocusStrongIcon sx={{ fontSize: 24, color: tokens.inkSecondary }} />
-          <Avatar sx={{ width: 36, height: 36, bgcolor: tokens.cyanContainer, color: tokens.onCyan, fontSize: 15, fontWeight: 500 }}>
-            Y
-          </Avatar>
+          <Avatar src={YOU_AVATAR} alt="" sx={{ width: 36, height: 36 }} />
         </Box>
 
         {/* Chip row (design.md 6.2) */}

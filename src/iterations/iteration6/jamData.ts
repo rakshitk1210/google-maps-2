@@ -1,3 +1,5 @@
+import { MEMBER_AVATARS } from '../../shared/peopleAvatars'
+
 export const DESTINATION_NAME = 'Mount Rainier'
 export const KELLEY_DISPLAY_NAME = 'Kelley'
 export const JAM_NAME = "Kelley's Jam"
@@ -21,13 +23,8 @@ export const JOINED_COUNT_LABEL = `${JOINED_COUNT} people`
 export const JOINED_SUBLINE_REST = ' have joined Jam!!'
 
 // The four Jam members. Index 0 is you (the phone user), index 1 is Kelley
-// (the driver). Portraits match the randomuser.me set used by iteration 5.
-export const MEMBER_AVATAR_URLS = [
-  'https://randomuser.me/api/portraits/women/44.jpg',
-  'https://randomuser.me/api/portraits/men/32.jpg',
-  'https://randomuser.me/api/portraits/women/68.jpg',
-  'https://randomuser.me/api/portraits/men/75.jpg',
-] as const
+// (the driver), then Josephine and Winnie — shared People on Roadtrip roster.
+export const MEMBER_AVATAR_URLS = MEMBER_AVATARS
 
 export const CAR_POSITION: [number, number] = [-122.3067, 47.6558]
 export const MOUNT_RAINIER: [number, number] = [-121.7603, 46.8523]

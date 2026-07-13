@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, IconButton, Typography } from '@mui/material'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf'
 import {
@@ -13,6 +13,7 @@ interface NavigationSheetProps {
   active: boolean
   toCafe: boolean
   onExit: () => void
+  onAiClick: () => void
 }
 
 const sheetSx = {
@@ -36,8 +37,8 @@ const dragHandleSx = {
 }
 
 // Bottom bar, design.md §6.13: white sheet radius 28 top, drag handle, row of
-// Gemini spark circle · centered ETA 26/600 + leaf · Exit pill (6.7).
-export function NavigationSheet({ active, toCafe, onExit }: NavigationSheetProps) {
+// Gemini spark circle (opens Ask Maps) · centered ETA 26/600 + leaf · Exit.
+export function NavigationSheet({ active, toCafe, onExit, onAiClick }: NavigationSheetProps) {
   if (!active) {
     return (
       <Box sx={{ ...sheetSx, pb: '24px' }}>
@@ -55,21 +56,20 @@ export function NavigationSheet({ active, toCafe, onExit }: NavigationSheetProps
     <Box sx={{ ...sheetSx, pb: '24px' }}>
       <Box sx={dragHandleSx} />
       <Box sx={{ display: 'flex', alignItems: 'center', px: '20px', pt: '12px', gap: '12px' }}>
-        <Box
+        <IconButton
+          aria-label="Ask Maps"
+          onClick={onAiClick}
           sx={{
             width: 56,
             height: 56,
-            borderRadius: '50%',
             flexShrink: 0,
             bgcolor: tokens.surface,
             border: `1px solid ${tokens.hairline}`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            '&:hover': { bgcolor: tokens.surface },
           }}
         >
           <AutoAwesomeIcon sx={{ fontSize: 26, color: tokens.blue }} />
-        </Box>
+        </IconButton>
         <Box sx={{ flex: 1, textAlign: 'center', minWidth: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
             <Typography sx={{ fontSize: 26, fontWeight: 600, color: tokens.green, lineHeight: 1.2 }}>

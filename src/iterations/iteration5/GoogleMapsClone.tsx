@@ -53,11 +53,16 @@ export function GoogleMapsClone() {
       >
         <MapCanvas center={CAR_POSITION} zoom={18} joined={joined} routeTarget={routeTarget} />
 
-        <NavigationBanner joined={joined} toCafe={routeTarget === 'cafe'} onAiClick={() => setAiView({ screen: 'chat' })} />
+        <NavigationBanner toCafe={routeTarget === 'cafe'} />
 
         <FloatingActions showRecenter={!joined} />
 
-        <NavigationSheet active={joined} toCafe={routeTarget === 'cafe'} onExit={() => {}} />
+        <NavigationSheet
+          active={joined}
+          toCafe={routeTarget === 'cafe'}
+          onExit={() => {}}
+          onAiClick={() => setAiView({ screen: 'chat' })}
+        />
 
         {jamState === 'invite' && (
           <JamInviteSheet onJoin={() => setJamState('joined')} onDismiss={() => setJamState('none')} />

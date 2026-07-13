@@ -1,20 +1,17 @@
-import { Box, IconButton, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import TurnLeftIcon from '@mui/icons-material/TurnLeft'
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import { BANNER_INSTRUCTION, CAFE_BANNER_INSTRUCTION } from './jamData'
 import { tokens } from './theme'
 
 interface NavigationBannerProps {
-  joined: boolean
   toCafe: boolean
-  onAiClick: () => void
 }
 
 // Instruction banner, design.md §6.13: --teal-banner card, radius 24, 12px side
-// margins, top 58px, 20px padding, 40px white maneuver arrow, Ask Maps spark
-// on the right. Flat (no shadow) per rule 0.10.
-export function NavigationBanner({ joined, toCafe, onAiClick }: NavigationBannerProps) {
+// margins, top 58px, 20px padding, 40px white maneuver arrow. Ask Maps lives on
+// the bottom sheet spark — kept off this banner so the turn stays primary.
+export function NavigationBanner({ toCafe }: NavigationBannerProps) {
   const ArrowIcon = toCafe ? TurnLeftIcon : ArrowUpwardIcon
 
   return (
@@ -48,19 +45,6 @@ export function NavigationBanner({ joined, toCafe, onAiClick }: NavigationBanner
       >
         {toCafe ? CAFE_BANNER_INSTRUCTION : BANNER_INSTRUCTION}
       </Typography>
-      <IconButton
-        aria-label="Ask Maps"
-        onClick={joined ? onAiClick : undefined}
-        sx={{
-          width: 40,
-          height: 40,
-          flexShrink: 0,
-          bgcolor: 'rgba(255,255,255,0.16)',
-          '&:hover': { bgcolor: 'rgba(255,255,255,0.24)' },
-        }}
-      >
-        <AutoAwesomeIcon sx={{ fontSize: 22, color: '#fff' }} />
-      </IconButton>
     </Box>
   )
 }

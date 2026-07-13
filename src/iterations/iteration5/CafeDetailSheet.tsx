@@ -57,12 +57,13 @@ export function CafeDetailSheet({ cafe, cafeIndex, onClose, onSendToCar }: CafeD
       </Typography>
 
       <Box sx={{ display: 'flex', gap: '8px', mt: '20px' }}>
-        {[1, 2].map((n) => (
+        {cafe.photos.slice(0, 2).map((src) => (
           <Box
-            key={n}
+            key={src}
             component="img"
-            src={`https://picsum.photos/seed/${cafe.id}-${n}/300/220`}
+            src={src}
             loading="lazy"
+            alt=""
             sx={{ flex: 1, width: 0, height: 130, borderRadius: '16px', objectFit: 'cover' }}
           />
         ))}

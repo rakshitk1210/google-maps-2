@@ -1,35 +1,25 @@
-import { Box, Typography } from '@mui/material'
-import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt'
-import WifiIcon from '@mui/icons-material/Wifi'
-import BatteryFullIcon from '@mui/icons-material/BatteryFull'
-import { MODE_TRANSITION, useTokens } from './theme'
+import { Box } from '@mui/material'
+import statusBar from '../../../Status bar.png'
 
-// iOS-style status bar (design.md §1: top ~54px overlay zone). Ink follows the
-// active mode's palette so it re-tints with the Road Trip flush.
+// iOS-style status bar asset (design.md §1: top overlay zone). Replaces the
+// drawn MUI icons so the chrome stays crisp and consistent over the map.
 export function PhoneStatusBar() {
-  const t = useTokens()
-  const inkSx = { color: t.ink, transition: MODE_TRANSITION } as const
   return (
     <Box
+      component="img"
+      src={statusBar}
+      alt=""
       sx={{
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
-        height: 54,
-        px: '28px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        width: '100%',
+        height: 'auto',
+        display: 'block',
         zIndex: 6,
+        pointerEvents: 'none',
       }}
-    >
-      <Typography sx={{ fontSize: 16, fontWeight: 600, ...inkSx }}>9:41</Typography>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-        <SignalCellularAltIcon sx={{ fontSize: 17, ...inkSx }} />
-        <WifiIcon sx={{ fontSize: 17, ...inkSx }} />
-        <BatteryFullIcon sx={{ fontSize: 17, ...inkSx, transform: 'rotate(90deg)' }} />
-      </Box>
-    </Box>
+    />
   )
 }

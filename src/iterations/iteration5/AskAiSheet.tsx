@@ -157,12 +157,13 @@ export function AskAiSheet({ skipAnimation, onOpenCafe, onClose }: AskAiSheetPro
                   </IconButton>
                 </Box>
                 <Box sx={{ display: 'flex', gap: '6px', mt: '12px' }}>
-                  {[1, 2, 3].map((n) => (
+                  {cafe.photos.slice(0, 3).map((src) => (
                     <Box
-                      key={n}
+                      key={src}
                       component="img"
-                      src={`https://picsum.photos/seed/${cafe.id}-${n}/200/140`}
+                      src={src}
                       loading="lazy"
+                      alt=""
                       sx={{ flex: 1, width: 0, height: 72, borderRadius: '10px', objectFit: 'cover' }}
                     />
                   ))}

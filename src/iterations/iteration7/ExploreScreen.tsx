@@ -11,9 +11,8 @@ import type { RoadTripTab } from './BottomNav'
 import { RoadTripChip } from './RoadTripChip'
 import { FriendsScreen } from './FriendsScreen'
 import { CaptureScreen } from './CaptureScreen'
+import { YOU_AVATAR } from './roadTripData'
 import { MODE_TRANSITION, useTokens } from './theme'
-
-const AVATAR_URL = 'https://randomuser.me/api/portraits/women/44.jpg'
 
 interface ExploreScreenProps {
   roadTrip: boolean
@@ -91,7 +90,7 @@ export function ExploreScreen({ roadTrip, onToggleRoadTrip, activeTab, onSelectT
         <MicIcon sx={{ fontSize: 24, color: t.inkSecondary, mr: '10px', transition: MODE_TRANSITION }} />
         <Box
           component="img"
-          src={AVATAR_URL}
+          src={YOU_AVATAR}
           alt=""
           sx={{ width: 36, height: 36, borderRadius: '50%', objectFit: 'cover' }}
         />
