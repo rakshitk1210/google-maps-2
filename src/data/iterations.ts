@@ -4,6 +4,8 @@ export interface Iteration {
 }
 
 export const iterations: Iteration[] = [
+  { id: 9, label: 'Iteration 9' },
+  { id: 8, label: 'Iteration 8' },
   { id: 7, label: 'Iteration 7' },
   { id: 6, label: 'Iteration 6' },
   { id: 5, label: 'Iteration 5' },
