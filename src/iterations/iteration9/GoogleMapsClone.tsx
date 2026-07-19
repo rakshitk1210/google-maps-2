@@ -19,7 +19,7 @@ import { theme, tokens } from './theme'
 // Iteration 9 — the Road Trip destination tab. The fam's shared "Roadtrip to
 // Skagit Valley" itinerary lives in a draggable bottom sheet behind a new
 // fourth nav tab. Tapping a place's directions button previews the route from
-// the U District; Start drops into active nav; and the purple Road Trip chip
+// the U District; Start drops into active nav; and the Road Trip chip
 // under the banner reopens the itinerary mid-drive. Switching destinations —
 // whether from the home tab or mid-drive — always lands back on the route
 // preview screen with the new destination filled in; the driver has to press

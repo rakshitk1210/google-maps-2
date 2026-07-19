@@ -1,23 +1,23 @@
-import { Box, Button, ButtonBase, IconButton, Typography } from '@mui/material'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { Box, Button, ButtonBase, Typography } from '@mui/material'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
 import PlaceIcon from '@mui/icons-material/Place'
 import NavigationIcon from '@mui/icons-material/Navigation'
-import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
-import { ORIGIN_LABEL, type TripPlace } from './tripData'
+import { GeminiSpark } from './GeminiSpark'
+import { ORIGIN_LABEL, TRIP_DEST } from './roadTripData'
 import { MOTION_EMPHASIZED, tokens } from './theme'
 
 interface RoutePreviewProps {
-  place: TripPlace
-  onBack: () => void
   onStart: () => void
+  onMakeRoadTrip: () => void
 }
 
-// Directions overview (design.md §6.9): origin/destination card up top over
-// the fitted route, and the bottom ETA card with the Start / Add stop / Saved
-// pill row from the iteration 9 sketch. Start is the only wired action.
-export function RoutePreview({ place, onBack, onStart }: RoutePreviewProps) {
+// Directions overview (design.md §6.9) for Seattle → Vancouver — iteration 11's
+// opening screen. Alongside the usual teal Start pill sits the Gemini-branded
+// "Make it a Road Trip" button, whose soft-blue face + gradient border invite
+// the AI-planned itinerary. Start and Make it a Road Trip are the wired
+// actions; Saved is decorative.
+export function RoutePreview({ onStart, onMakeRoadTrip }: RoutePreviewProps) {
   return (
     <>
       {/* Origin → destination header card */}
@@ -34,7 +34,7 @@ export function RoutePreview({ place, onBack, onStart }: RoutePreviewProps) {
           display: 'flex',
           alignItems: 'center',
           gap: '4px',
-          p: '10px 12px',
+          p: '10px 16px',
           animation: `preview-in 360ms ${MOTION_EMPHASIZED} both`,
           '@keyframes preview-in': {
             from: { opacity: 0, transform: 'translateY(-16px)' },
@@ -42,10 +42,6 @@ export function RoutePreview({ place, onBack, onStart }: RoutePreviewProps) {
           },
         }}
       >
-        <IconButton aria-label="Back" onClick={onBack} sx={{ width: 40, height: 40, color: tokens.ink }}>
-          <ArrowBackIcon sx={{ fontSize: 24 }} />
-        </IconButton>
-
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', py: '6px' }}>
             <Box
@@ -66,7 +62,7 @@ export function RoutePreview({ place, onBack, onStart }: RoutePreviewProps) {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', py: '6px' }}>
             <PlaceIcon sx={{ fontSize: 16, color: tokens.red, flexShrink: 0, ml: '-2px', mr: '-2px' }} />
             <Typography noWrap sx={{ fontSize: 16, fontWeight: 500, color: tokens.ink }}>
-              {place.name}
+              {TRIP_DEST.name}
             </Typography>
           </Box>
         </Box>
@@ -100,10 +96,10 @@ export function RoutePreview({ place, onBack, onStart }: RoutePreviewProps) {
         />
         <Box sx={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
           <Typography sx={{ fontSize: 26, fontWeight: 600, color: tokens.green, lineHeight: 1.15 }}>
-            {place.driveTime}
+            {TRIP_DEST.duration}
           </Typography>
           <Typography noWrap sx={{ fontSize: 16, fontWeight: 400, color: tokens.inkSecondary }}>
-            {place.arriveTime} · Fastest route
+            {TRIP_DEST.arriveTime} · Fastest route
           </Typography>
         </Box>
 
@@ -139,26 +135,38 @@ export function RoutePreview({ place, onBack, onStart }: RoutePreviewProps) {
           >
             Start
           </Button>
-          <ButtonBase
+
+          {/* Gemini-branded CTA — soft-blue face inside a gradient border. */}
+          <Box
             sx={{
-              height: 52,
-              px: '20px',
-              borderRadius: 999,
               flexShrink: 0,
-              whiteSpace: 'nowrap',
-              bgcolor: tokens.cyanContainer,
-              color: tokens.onCyan,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: 16,
-              fontWeight: 500,
-              fontFamily: 'inherit',
+              borderRadius: 999,
+              p: '1.5px',
+              background: 'linear-gradient(90deg, #4285F4, #9B72CB, #D96570)',
             }}
           >
-            <AddLocationAltOutlinedIcon sx={{ fontSize: 21 }} />
-            Add stop
-          </ButtonBase>
+            <ButtonBase
+              onClick={onMakeRoadTrip}
+              sx={{
+                height: 49,
+                px: '20px',
+                borderRadius: 999,
+                whiteSpace: 'nowrap',
+                bgcolor: tokens.blueContainer,
+                color: tokens.blue,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: 16,
+                fontWeight: 600,
+                fontFamily: 'inherit',
+              }}
+            >
+              <GeminiSpark size={18} badge badgeSize={28} />
+              Make it a Road Trip
+            </ButtonBase>
+          </Box>
+
           <ButtonBase
             sx={{
               height: 52,

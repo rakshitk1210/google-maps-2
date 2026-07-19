@@ -5,19 +5,20 @@ import PlaceIcon from '@mui/icons-material/Place'
 import NavigationIcon from '@mui/icons-material/Navigation'
 import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
-import { ORIGIN_LABEL, type TripPlace } from './tripData'
+import { ORIGIN_LABEL, type NavDestination } from './jamTripData'
 import { MOTION_EMPHASIZED, tokens } from './theme'
 
 interface RoutePreviewProps {
-  place: TripPlace
+  dest: NavDestination
   onBack: () => void
   onStart: () => void
 }
 
-// Directions overview (design.md §6.9): origin/destination card up top over
-// the fitted route, and the bottom ETA card with the Start / Add stop / Saved
-// pill row from the iteration 9 sketch. Start is the only wired action.
-export function RoutePreview({ place, onBack, onStart }: RoutePreviewProps) {
+// Directions overview (design.md §6.9), shown after the match's Directions
+// action: the drive drops out of nav so the jam can review the new route and
+// deliberately press Start — per the user's iteration 9 correction, the app
+// never re-routes live underneath the driver. Start is the only wired action.
+export function RoutePreview({ dest, onBack, onStart }: RoutePreviewProps) {
   return (
     <>
       {/* Origin → destination header card */}
@@ -66,7 +67,7 @@ export function RoutePreview({ place, onBack, onStart }: RoutePreviewProps) {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', py: '6px' }}>
             <PlaceIcon sx={{ fontSize: 16, color: tokens.red, flexShrink: 0, ml: '-2px', mr: '-2px' }} />
             <Typography noWrap sx={{ fontSize: 16, fontWeight: 500, color: tokens.ink }}>
-              {place.name}
+              {dest.name}
             </Typography>
           </Box>
         </Box>
@@ -100,10 +101,10 @@ export function RoutePreview({ place, onBack, onStart }: RoutePreviewProps) {
         />
         <Box sx={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
           <Typography sx={{ fontSize: 26, fontWeight: 600, color: tokens.green, lineHeight: 1.15 }}>
-            {place.driveTime}
+            {dest.duration}
           </Typography>
           <Typography noWrap sx={{ fontSize: 16, fontWeight: 400, color: tokens.inkSecondary }}>
-            {place.arriveTime} · Fastest route
+            {dest.arriveTime} · Fastest route
           </Typography>
         </Box>
 

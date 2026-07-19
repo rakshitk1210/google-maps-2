@@ -1,20 +1,20 @@
 import { Box, Button, Typography } from '@mui/material'
 import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf'
-import geminiCircle from '../../../Gemini circle.png'
+import geminiCircle from '../../../Gemini circle nav.png'
 import { tokens } from './theme'
 
 interface NavBottomBarProps {
-  /** ETA duration for the current destination, e.g. "47 min". */
+  /** ETA duration for the current destination, e.g. "4 hr 30 min". */
   duration: string
-  /** Gray meta line, e.g. "18 mi · 5:55 PM". */
+  /** Gray meta line, e.g. "138 mi · 7:38 PM". */
   meta: string
   onExit: () => void
 }
 
-// Phone bottom bar, design.md §6.13 (iteration 8's bar with live props): drag
-// handle, Gemini spark circle, ETA in --green + leaf with gray meta line,
-// destructive-tonal Exit pill. Flat (rule 0.10). The ETA re-reads the selected
-// place, so switching destinations mid-drive updates it in place.
+// Phone bottom bar, design.md §6.13: drag handle, Gemini circle mark, ETA in
+// --green + leaf with gray meta line, destructive-tonal Exit pill. Flat (rule
+// 0.10). Uses the full circular Gemini asset (white disc + spark) — distinct
+// from the bare spark used on the road-trip CTA / chip / sheet.
 export function NavBottomBar({ duration, meta, onExit }: NavBottomBarProps) {
   return (
     <Box
@@ -46,12 +46,7 @@ export function NavBottomBar({ duration, meta, onExit }: NavBottomBarProps) {
           component="img"
           src={geminiCircle}
           alt="Ask Maps"
-          sx={{
-            width: 64,
-            height: 64,
-            flexShrink: 0,
-            display: 'block',
-          }}
+          sx={{ width: 64, height: 64, flexShrink: 0, display: 'block' }}
         />
 
         <Box sx={{ flex: 1, textAlign: 'center', minWidth: 0 }}>

@@ -17,22 +17,18 @@ interface TabSpec {
   id: Tab
   label: string
   icon: ReactElement
-  /** Road Trip gets the gem-purple active pill; the rest stay cyan. */
-  accent?: boolean
 }
 
 const TABS: TabSpec[] = [
   { id: 'explore', label: 'Explore', icon: <ExploreIcon /> },
   { id: 'contribute', label: 'Contribute', icon: <AddCircleOutlineIcon /> },
   { id: 'saved', label: 'Saved', icon: <BookmarkBorderIcon /> },
-  { id: 'roadtrip', label: 'Road Trip', icon: <DirectionsCarFilledOutlinedIcon />, accent: true },
+  { id: 'roadtrip', label: 'Road Trip', icon: <DirectionsCarFilledOutlinedIcon /> },
 ]
 
 // design.md §6.4 tab: active gets the 64×32 tonal pill behind a filled icon
 // (13/600 label), inactive is a bare outlined icon (13/500 secondary label).
 function NavTab({ spec, active, onClick }: { spec: TabSpec; active: boolean; onClick: () => void }) {
-  const pillBg = spec.accent ? tokens.purpleContainer : tokens.cyanContainer
-  const pillFg = spec.accent ? tokens.purple : tokens.teal
   return (
     <ButtonBase
       onClick={onClick}
@@ -52,13 +48,13 @@ function NavTab({ spec, active, onClick }: { spec: TabSpec; active: boolean; onC
             width: 64,
             height: 32,
             borderRadius: 999,
-            bgcolor: pillBg,
+            bgcolor: tokens.cyanContainer,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <Box sx={{ display: 'flex', color: pillFg, '& svg': { fontSize: 24 } }}>{spec.icon}</Box>
+          <Box sx={{ display: 'flex', color: tokens.teal, '& svg': { fontSize: 24 } }}>{spec.icon}</Box>
         </Box>
       ) : (
         <Box sx={{ display: 'flex', color: tokens.ink, '& svg': { fontSize: 24 } }}>{spec.icon}</Box>

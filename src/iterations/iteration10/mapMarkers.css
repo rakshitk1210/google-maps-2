@@ -1,0 +1,78 @@
+/* Decorative map-surface markers. Per design.md rule 0.10 these live on the
+   map, so they're the only elements carrying shadows.
+
+   Mapbox owns the root marker element's transform for positioning, so entrance
+   animations live on inner wrappers (iteration 7's gem-pin lesson). */
+
+.dest-pin {
+  pointer-events: none;
+  display: flex;
+}
+
+.dest-pin-inner {
+  display: flex;
+  filter: drop-shadow(0 2px 3px rgba(60, 64, 67, 0.4));
+  animation: dest-pin-drop 360ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes dest-pin-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Restaurant rating pill — the real-GMaps red lozenge with a fork + rating,
+   plus a little triangle tail pointing at the spot. */
+
+.rest-marker {
+  pointer-events: none;
+  display: flex;
+}
+
+.rest-marker-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 2px 3px rgba(60, 64, 67, 0.4));
+  animation: rest-marker-pop 320ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.rest-marker-inner .rest-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #d93025;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  padding: 4px 10px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Google Sans Flex', 'Google Sans', Roboto, sans-serif;
+  line-height: 1;
+}
+
+.rest-marker-inner .rest-tail {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid #ffffff;
+  margin-top: -1px;
+}
+
+@keyframes rest-marker-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

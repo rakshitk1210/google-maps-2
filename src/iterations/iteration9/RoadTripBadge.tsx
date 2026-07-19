@@ -6,7 +6,7 @@ interface RoadTripBadgeProps {
   onClick: () => void
 }
 
-// The in-drive "Road Trip" chip from the iteration 9 sketch: a gem-purple pill
+// The in-drive "Road Trip" chip from the iteration 9 sketch: a cyan tonal pill
 // hanging beside the banner's Then-chip. Tapping it opens the trip itinerary
 // over the driving view so the fam can reroute without ever exiting nav.
 export function RoadTripBadge({ onClick }: RoadTripBadgeProps) {
@@ -22,7 +22,7 @@ export function RoadTripBadge({ onClick }: RoadTripBadgeProps) {
         height: 40,
         px: '16px',
         borderRadius: 999,
-        bgcolor: tokens.purpleContainer,
+        bgcolor: tokens.cyanContainer,
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
@@ -33,8 +33,8 @@ export function RoadTripBadge({ onClick }: RoadTripBadgeProps) {
         },
       }}
     >
-      <DirectionsCarFilledIcon sx={{ fontSize: 20, color: tokens.purple }} />
-      <Typography sx={{ fontSize: 15, fontWeight: 600, color: tokens.onPurple }}>Road Trip</Typography>
+      <DirectionsCarFilledIcon sx={{ fontSize: 20, color: tokens.teal }} />
+      <Typography sx={{ fontSize: 15, fontWeight: 600, color: tokens.onCyan }}>Road Trip</Typography>
     </ButtonBase>
   )
 }

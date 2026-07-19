@@ -4,17 +4,17 @@ import geminiCircle from '../../../Gemini circle.png'
 import { tokens } from './theme'
 
 interface NavBottomBarProps {
-  /** ETA duration for the current destination, e.g. "47 min". */
+  /** ETA duration for the current destination, e.g. "1 hr 55 min". */
   duration: string
-  /** Gray meta line, e.g. "18 mi · 5:55 PM". */
+  /** Gray meta line, e.g. "86 mi · 8:12 PM". */
   meta: string
   onExit: () => void
 }
 
-// Phone bottom bar, design.md §6.13 (iteration 8's bar with live props): drag
-// handle, Gemini spark circle, ETA in --green + leaf with gray meta line,
-// destructive-tonal Exit pill. Flat (rule 0.10). The ETA re-reads the selected
-// place, so switching destinations mid-drive updates it in place.
+// Phone bottom bar, design.md §6.13: drag handle, Gemini spark circle, ETA in
+// --green + leaf with gray meta line, destructive-tonal Exit pill. Flat (rule
+// 0.10). The ETA re-reads the committed destination, so it updates in place
+// after the jam matches and starts toward the restaurant.
 export function NavBottomBar({ duration, meta, onExit }: NavBottomBarProps) {
   return (
     <Box

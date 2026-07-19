@@ -69,9 +69,9 @@ export function PlaceCard({ place, onDirections }: PlaceCardProps) {
           height: 48,
           borderRadius: '50%',
           flexShrink: 0,
-          bgcolor: tokens.purpleSoft,
-          color: tokens.purple,
-          '&:hover': { bgcolor: tokens.purpleContainer },
+          bgcolor: tokens.cyanContainerSoft,
+          color: tokens.teal,
+          '&:hover': { bgcolor: tokens.cyanContainer },
         }}
       >
         <DirectionsIcon sx={{ fontSize: 26 }} />

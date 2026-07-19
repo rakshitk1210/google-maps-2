@@ -8,7 +8,7 @@ interface CategoryChipsProps {
 }
 
 // Horizontal filter chips over the curated places list (design.md §6.2 chip
-// anatomy at sheet scale). The selected chip takes the gem-purple tonal fill.
+// anatomy at sheet scale). The selected chip takes the cyan tonal fill.
 export function CategoryChips({ selected, onSelect }: CategoryChipsProps) {
   return (
     <Box
@@ -30,8 +30,8 @@ export function CategoryChips({ selected, onSelect }: CategoryChipsProps) {
               px: '16px',
               borderRadius: 999,
               flexShrink: 0,
-              bgcolor: active ? tokens.purpleContainer : tokens.surface,
-              border: `1px solid ${active ? tokens.purpleContainer : tokens.hairline}`,
+              bgcolor: active ? tokens.cyanContainer : tokens.surface,
+              border: `1px solid ${active ? tokens.cyanContainer : tokens.hairline}`,
               transition: `background-color 200ms, border-color 200ms`,
             }}
           >
@@ -39,7 +39,7 @@ export function CategoryChips({ selected, onSelect }: CategoryChipsProps) {
               sx={{
                 fontSize: 14,
                 fontWeight: active ? 600 : 500,
-                color: active ? tokens.onPurple : tokens.ink,
+                color: active ? tokens.onCyan : tokens.ink,
               }}
             >
               {category}

@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, Typography } from '@mui/material'
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf'
+import geminiCircle from '../../../Gemini circle.png'
 import {
   CAFE_TRIP_DISTANCE_ETA,
   CAFE_TRIP_DURATION,
@@ -38,15 +38,19 @@ export function PhoneNavSheet({ toCafe, onAiClick }: PhoneNavSheetProps) {
           aria-label="Ask Maps"
           onClick={onAiClick}
           sx={{
-            width: 56,
-            height: 56,
+            width: 64,
+            height: 64,
             flexShrink: 0,
-            bgcolor: tokens.surface,
-            border: `1px solid ${tokens.hairline}`,
-            '&:hover': { bgcolor: tokens.surfaceDim },
+            p: 0,
+            '&:hover': { bgcolor: 'transparent' },
           }}
         >
-          <AutoAwesomeIcon sx={{ fontSize: 26, color: tokens.blue }} />
+          <Box
+            component="img"
+            src={geminiCircle}
+            alt=""
+            sx={{ width: 64, height: 64, display: 'block' }}
+          />
         </IconButton>
         <Box sx={{ flex: 1, textAlign: 'center', minWidth: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>

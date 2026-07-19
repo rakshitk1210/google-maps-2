@@ -1,8 +1,9 @@
 import { createTheme } from '@mui/material'
 
-// Design tokens from design.md §2 (color), §4 (shape & elevation). Iteration 9
-// uses the standard Google Maps teal/cyan accent set for CTAs, chips, and
-// active chrome (Start, Add stop, Road Trip tab, filter chips).
+// Design tokens from design.md §2 (color), §4 (shape & elevation). Iteration 11
+// keeps the standard nav teal/cyan chrome; the "Make it a Road Trip" CTA and
+// the AI trip sheet lean on --blue and a soft blue container per the sketch's
+// Gemini-branded flow.
 export const tokens = {
   // Ink & surfaces
   ink: '#202124',
@@ -22,19 +23,25 @@ export const tokens = {
   cyanContainerSoft: '#D3EDF2',
   onCyan: '#073B41',
   blue: '#1A73E8',
+  // Soft blue tonal container for the Gemini road-trip flow.
+  blueContainer: '#E8F0FE',
   red: '#D93025',
   redContainer: '#F9DEDC',
   green: '#188038',
   amber: '#FBBC04',
-  // Normal-drive polyline — Google blue (iteration 8's red was traffic-only).
+  // Normal-drive polyline — Google blue.
   route: '#4285F4',
+
+  // Nav compass needle (iteration 8's rail)
+  compassNorth: '#EA4335',
+  compassSouth: '#9AA0A6',
 
   // Location puck (design.md §2 --blue-dot family; the chevron in nav)
   puck: '#4285F4',
   puckHalo: 'rgba(66, 133, 244, 0.18)',
 
-  // Elevation — shadows ONLY on map-surface elements (puck, destination pin;
-  // rule 0.10). All floating chrome is intentionally flat.
+  // Elevation — shadows ONLY on map-surface elements (puck, pins, rating
+  // markers; rule 0.10). All floating chrome is intentionally flat.
   shadowPin: '0 1px 2px rgba(60,64,67,.30), 0 2px 6px 2px rgba(60,64,67,.15)',
   shadowFloat: 'none',
   shadowSheet: 'none',
