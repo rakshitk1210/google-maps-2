@@ -6,13 +6,15 @@ import { MOTION_EMPHASIZED, tokens } from './theme'
 interface RoadTripChipProps {
   /** Reopens the itinerary sheet over the drive. */
   onClick: () => void
+  /** "Next stop" line, reflecting the chosen first stop. */
+  nextText?: string
 }
 
 // The active-trip chip that hangs under the banner while driving the
 // Gemini-planned route (iteration 10's JamChip slot). Two lines carry the
 // "destination No. 1" framing from the sketch — the route itself stays
 // SEA → VAN, so the chip does the textual work. Tapping reopens the itinerary.
-export function RoadTripChip({ onClick }: RoadTripChipProps) {
+export function RoadTripChip({ onClick, nextText = CHIP_NEXT }: RoadTripChipProps) {
   return (
     <ButtonBase
       onClick={onClick}
@@ -42,7 +44,7 @@ export function RoadTripChip({ onClick }: RoadTripChipProps) {
           {CHIP_TITLE}
         </Typography>
         <Typography noWrap sx={{ fontSize: 12.5, fontWeight: 400, color: tokens.onCyan, opacity: 0.8, lineHeight: 1.25 }}>
-          {CHIP_NEXT}
+          {nextText}
         </Typography>
       </Box>
     </ButtonBase>

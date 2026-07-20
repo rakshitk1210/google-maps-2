@@ -3,15 +3,24 @@ import CloseIcon from '@mui/icons-material/Close'
 import NavigationIcon from '@mui/icons-material/Navigation'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import CheckIcon from '@mui/icons-material/Check'
 import { GeminiSpark } from './GeminiSpark'
-import { CHIP_NEXT, SHEET_SUBTITLE, SHEET_TITLE, STOPS } from './roadTripData'
+import { SHEET_SUBTITLE, SHEET_TITLE, STOPS, type TripStop } from './roadTripData'
 import { MOTION_EMPHASIZED, tokens } from './theme'
 
 interface AiTripSheetProps {
   /** 'plan' before the trip starts (Start CTA); 'active' once driving. */
   mode: 'plan' | 'active'
+  /** Which stop is currently the trip's first destination. */
+  selectedStopId: string
+  /** "Next stop" label reflecting the current selection. */
+  nextText: string
   onClose: () => void
   onStart: () => void
+  /** Pick a stop as the first destination (radio tap). */
+  onSelectStop: (id: string) => void
+  /** Open a stop's detail page (card tap). */
+  onOpenStop: (stop: TripStop) => void
 }
 
 // The Gemini-planned itinerary sheet. In 'plan' mode it previews the four
@@ -19,7 +28,15 @@ interface AiTripSheetProps {
 // road-trip chip mid-drive) the first stop is highlighted as "Next stop" and
 // the Start CTA gives way to a status line. Fixed height, conditionally
 // mounted (no cross-phase state).
-export function AiTripSheet({ mode, onClose, onStart }: AiTripSheetProps) {
+export function AiTripSheet({
+  mode,
+  selectedStopId,
+  nextText,
+  onClose,
+  onStart,
+  onSelectStop,
+  onOpenStop,
+}: AiTripSheetProps) {
   const active = mode === 'active'
 
   return (
@@ -95,16 +112,22 @@ export function AiTripSheet({ mode, onClose, onStart }: AiTripSheetProps) {
         }}
       >
         {STOPS.map((stop, i) => {
-          const isNext = active && i === 0
+          const selected = stop.id === selectedStopId
+          const badgeLabel = selected ? (active ? 'Next stop' : '1st stop') : `Stop ${i + 1}`
           return (
             <Box
               key={stop.id}
+              role="button"
+              tabIndex={0}
+              aria-label={`Open ${stop.name}`}
+              onClick={() => onOpenStop(stop)}
               sx={{
                 width: 168,
                 flexShrink: 0,
                 borderRadius: '16px',
-                p: isNext ? '5px' : 0,
-                border: isNext ? `2px solid ${tokens.blue}` : '2px solid transparent',
+                p: selected ? '5px' : 0,
+                border: selected ? `2px solid ${tokens.blue}` : '2px solid transparent',
+                cursor: 'pointer',
               }}
             >
               <Box sx={{ position: 'relative' }}>
@@ -124,14 +147,40 @@ export function AiTripSheet({ mode, onClose, onStart }: AiTripSheetProps) {
                     borderRadius: 999,
                     display: 'flex',
                     alignItems: 'center',
-                    bgcolor: isNext ? tokens.blue : 'rgba(255,255,255,0.92)',
-                    color: isNext ? '#fff' : tokens.ink,
+                    bgcolor: selected ? tokens.blue : 'rgba(255,255,255,0.92)',
+                    color: selected ? '#fff' : tokens.ink,
                     fontSize: 11.5,
                     fontWeight: 600,
                   }}
                 >
-                  {isNext ? 'Next stop' : `Stop ${i + 1}`}
+                  {badgeLabel}
                 </Box>
+
+                {/* First-stop selector — tap to reorder without leaving the sheet. */}
+                {!active && (
+                  <ButtonBase
+                    aria-label={selected ? `${stop.name} is your first stop` : `Make ${stop.name} the first stop`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onSelectStop(stop.id)
+                    }}
+                    sx={{
+                      position: 'absolute',
+                      top: 8,
+                      right: 8,
+                      width: 26,
+                      height: 26,
+                      borderRadius: '50%',
+                      bgcolor: selected ? tokens.blue : 'rgba(255,255,255,0.92)',
+                      border: selected ? 'none' : `1.5px solid ${tokens.dragHandle}`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {selected && <CheckIcon sx={{ fontSize: 17, color: '#fff' }} />}
+                  </ButtonBase>
+                )}
               </Box>
               <Typography sx={{ fontSize: 15, fontWeight: 600, color: tokens.ink, mt: '6px' }} noWrap>
                 {stop.name}
@@ -143,6 +192,12 @@ export function AiTripSheet({ mode, onClose, onStart }: AiTripSheetProps) {
           )
         })}
       </Box>
+
+      {!active && (
+        <Typography sx={{ fontSize: 12.5, color: tokens.inkSecondary, px: '20px', mt: '10px' }}>
+          Tap a stop for details, or ✓ pick which to visit first.
+        </Typography>
+      )}
 
       {/* Footer */}
       {active ? (
@@ -161,7 +216,7 @@ export function AiTripSheet({ mode, onClose, onStart }: AiTripSheetProps) {
           <Typography noWrap sx={{ fontSize: 15, fontWeight: 500, color: tokens.ink }}>
             On this road trip ·{' '}
             <Box component="span" sx={{ color: tokens.inkSecondary, fontWeight: 400 }}>
-              {CHIP_NEXT}
+              {nextText}
             </Box>
           </Typography>
         </Box>

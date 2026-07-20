@@ -8,7 +8,16 @@ import { NavBottomBar } from './NavBottomBar'
 import { RoutePreview } from './RoutePreview'
 import { AiTripSheet } from './AiTripSheet'
 import { RoadTripChip } from './RoadTripChip'
-import { NAV_ETA, NEXT_STOP_NAV, NEXT_STOP_NAV_ETA, TRIP_DEST } from './roadTripData'
+import { StopDetailSheet } from './StopDetailSheet'
+import {
+  NAV_ETA,
+  STOPS,
+  TRIP_DEST,
+  chipNextForStop,
+  navEtaForStop,
+  navForStop,
+  type TripStop,
+} from './roadTripData'
 import { theme, tokens } from './theme'
 
 type Screen = 'preview' | 'nav'
@@ -25,14 +34,30 @@ export function GoogleMapsClone() {
   const [screen, setScreen] = useState<Screen>('preview')
   const [aiSheetOpen, setAiSheetOpen] = useState(false)
   const [tripActive, setTripActive] = useState(false)
+  // Which stop is the trip's first destination (default: stop 1).
+  const [selectedStopId, setSelectedStopId] = useState(STOPS[0].id)
+  // Stop whose detail page is open on top of the itinerary (null = closed).
+  const [detailStop, setDetailStop] = useState<TripStop | null>(null)
+
+  const selectedStop = STOPS.find((s) => s.id === selectedStopId) ?? STOPS[0]
 
   // Plain Start — straight to Vancouver, no Gemini trip.
   const handleStart = () => {
     setScreen('nav')
   }
 
-  // Sheet's Start — commit the Gemini trip, then drive to stop 1.
+  // Sheet's Start — commit the Gemini trip, then drive to the chosen first stop.
   const handleTripStart = () => {
+    setAiSheetOpen(false)
+    setDetailStop(null)
+    setTripActive(true)
+    setScreen('nav')
+  }
+
+  // "Go here first" from a stop's detail page — make it the first stop and drive.
+  const handleGoFirst = (stop: TripStop) => {
+    setSelectedStopId(stop.id)
+    setDetailStop(null)
     setAiSheetOpen(false)
     setTripActive(true)
     setScreen('nav')
@@ -42,6 +67,8 @@ export function GoogleMapsClone() {
     setScreen('preview')
     setTripActive(false)
     setAiSheetOpen(false)
+    setDetailStop(null)
+    setSelectedStopId(STOPS[0].id)
   }
 
   // Stop markers are on while the sheet is open (either mode) or the committed
@@ -49,9 +76,9 @@ export function GoogleMapsClone() {
   const stopsVisible = aiSheetOpen || (tripActive && screen === 'nav')
   const sheetMode = tripActive && screen === 'nav' ? 'active' : 'plan'
   // Preview always shows the full SEA→VAN corridor; once the road trip is
-  // active, nav routes to the first stop instead of Vancouver.
-  const mapDest = tripActive && screen === 'nav' ? NEXT_STOP_NAV : TRIP_DEST
-  const navEta = tripActive ? NEXT_STOP_NAV_ETA : NAV_ETA
+  // active, nav routes to the chosen first stop instead of Vancouver.
+  const mapDest = tripActive && screen === 'nav' ? navForStop(selectedStop) : TRIP_DEST
+  const navEta = tripActive ? navEtaForStop(selectedStop) : NAV_ETA
 
   return (
     <ThemeProvider theme={theme}>
@@ -69,7 +96,9 @@ export function GoogleMapsClone() {
         {screen === 'nav' && (
           <>
             <NavBanner road={mapDest.bannerRoad} />
-            {tripActive && <RoadTripChip onClick={() => setAiSheetOpen(true)} />}
+            {tripActive && (
+              <RoadTripChip onClick={() => setAiSheetOpen(true)} nextText={chipNextForStop(selectedStop)} />
+            )}
             <NavRail />
             <NavBottomBar duration={navEta.duration} meta={navEta.meta} onExit={handleExit} />
           </>
@@ -82,8 +111,21 @@ export function GoogleMapsClone() {
         {aiSheetOpen && (
           <AiTripSheet
             mode={sheetMode}
+            selectedStopId={selectedStopId}
+            nextText={chipNextForStop(selectedStop)}
             onClose={() => setAiSheetOpen(false)}
             onStart={handleTripStart}
+            onSelectStop={setSelectedStopId}
+            onOpenStop={setDetailStop}
+          />
+        )}
+
+        {detailStop && (
+          <StopDetailSheet
+            stop={detailStop}
+            stopIndex={STOPS.findIndex((s) => s.id === detailStop.id)}
+            onClose={() => setDetailStop(null)}
+            onGoFirst={handleGoFirst}
           />
         )}
       </Box>

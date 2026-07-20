@@ -9,11 +9,10 @@ import { NavPuck } from './NavPuck'
 import { drawTripRoute } from './mapRoute'
 import {
   FALLBACK_ROUTE,
-  FALLBACK_TO_NEXT_STOP,
+  fallbackToDest,
   NAV_ZOOM,
   SEATTLE_ORIGIN,
   STOPS,
-  TRIP_DEST,
   type NavDestination,
   stopMarkerPhoto,
 } from './roadTripData'
@@ -139,8 +138,7 @@ export function TripMapCanvas({ phase, dest, stopsVisible, sheetOpen }: TripMapC
     const map = mapRef.current
     if (!map || !mapReady) return
     const seq = ++seqRef.current
-    const toNextStop = dest.lngLat[0] !== TRIP_DEST.lngLat[0] || dest.lngLat[1] !== TRIP_DEST.lngLat[1]
-    const fallback = toNextStop ? FALLBACK_TO_NEXT_STOP : FALLBACK_ROUTE
+    const fallback = fallbackToDest(dest.lngLat)
 
     // Destination pin follows the active nav target.
     if (!destMarkerRef.current) {
