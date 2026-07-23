@@ -41,7 +41,7 @@ interface DriveOptions {
 // Animate a continuous drive along `coords`: the marker rides the route while
 // the camera trails just behind it, always looking in the direction of travel
 // (the puck stays pointing "up" as the map rotates, Google-nav style). Returns
-// a stop function. The I-5 → Vancouver route is far longer than any demo run,
+// a stop function. The Seattle → Olympic route is far longer than any demo run,
 // so this simply keeps moving forward — no looping needed.
 export function driveAlong(
   map: MapboxMap,

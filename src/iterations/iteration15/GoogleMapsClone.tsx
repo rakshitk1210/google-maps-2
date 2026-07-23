@@ -18,7 +18,7 @@ import { theme, tokens } from './theme'
 type Screen = 'lists' | 'listDetail' | 'roadtrip' | 'preview' | 'nav'
 
 // Iteration 15 — Ask Maps inside the itinerary. Iteration 13's Road Trip Jam
-// (shared "Skagit Valley" list → road-trip mode → preview → nav) gains an AI
+// (shared "Olympic National Park" list → road-trip mode → preview → nav) gains an AI
 // search entry: the gradient "Ask Maps" pill on the list sheet expands into an
 // inline query card, typing happens over a fake iOS keyboard, and submitting
 // opens a results sheet — user bubble, typewritten answer, two cafe cards.
@@ -66,7 +66,7 @@ export function GoogleMapsClone() {
     setSnap('full')
   }
 
-  const openSkagit = () => {
+  const openRoadTrip = () => {
     setSnap('peek')
     setScreen('listDetail')
   }
@@ -156,7 +156,7 @@ export function GoogleMapsClone() {
 
         {screen === 'lists' && (
           <>
-            <YouListsSheet onOpenSkagit={openSkagit} />
+            <YouListsSheet onOpenRoadTrip={openRoadTrip} />
             <BottomNav activeTab="you" onSelectTab={() => {}} />
           </>
         )}

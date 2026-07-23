@@ -7,8 +7,8 @@ import { MOTION_EMPHASIZED, tokens } from './theme'
 import { YOU_LISTS, type YouList } from './tripData'
 
 interface YouListsSheetProps {
-  /** Opens the Skagit road-trip itinerary (the one live row). */
-  onOpenSkagit: () => void
+  /** Opens the Olympic National Park road-trip itinerary (the one live row). */
+  onOpenRoadTrip: () => void
 }
 
 /** One "Your lists" row — emoji leading, name + meta, trailing ⋯. Shared rows
@@ -83,10 +83,10 @@ function ListRow({ list, onClick }: { list: YouList; onClick?: () => void }) {
 }
 
 // The near-full "You / Your lists" sheet (iteration 13 entry screen). Renders
-// the saved-list roster with the Skagit road-trip list as the emphasized hero
+// the saved-list roster with the Olympic National Park road-trip list as the hero
 // row; the rest are inert decoys matching the real Maps "You" tab. Tapping the
-// Skagit row opens the collaborative itinerary (list detail).
-export function YouListsSheet({ onOpenSkagit }: YouListsSheetProps) {
+// Olympic National Park row opens the collaborative itinerary (list detail).
+export function YouListsSheet({ onOpenRoadTrip }: YouListsSheetProps) {
   return (
     <Box
       sx={{
@@ -187,7 +187,7 @@ export function YouListsSheet({ onOpenSkagit }: YouListsSheetProps) {
                   index < YOU_LISTS.length - 1 ? `1px solid ${tokens.hairline}` : 'none',
               }}
             >
-              <ListRow list={list} onClick={list.roadtrip ? onOpenSkagit : undefined} />
+              <ListRow list={list} onClick={list.roadtrip ? onOpenRoadTrip : undefined} />
             </Box>
           ))}
         </Box>

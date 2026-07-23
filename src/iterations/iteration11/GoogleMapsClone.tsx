@@ -22,13 +22,13 @@ import { theme, tokens } from './theme'
 
 type Screen = 'preview' | 'nav'
 
-// Iteration 11 — "Make it a Road Trip". The app opens on a Seattle → Vancouver
+// Iteration 11 — "Make it a Road Trip". The app opens on a Seattle → Olympic
 // route preview. Next to the usual Start pill sits a Gemini-branded "Make it a
 // Road Trip" button; tapping it opens an AI-planned itinerary sheet (4 stops
 // along I-5) and strings photo markers across the map. Starting *that* trip
 // navigates to the first stop (Snow Goose Produce) with a "SEA → VAN Road Trip"
 // chip under the banner — tapping the chip reopens the itinerary with that stop
-// as "Next stop". Plain Start drives to Vancouver with no chip or markers, so
+// as "Next stop". Plain Start drives straight to the park with no chip or markers, so
 // the AI button demonstrably changes the drive.
 export function GoogleMapsClone() {
   const [screen, setScreen] = useState<Screen>('preview')
@@ -41,7 +41,7 @@ export function GoogleMapsClone() {
 
   const selectedStop = STOPS.find((s) => s.id === selectedStopId) ?? STOPS[0]
 
-  // Plain Start — straight to Vancouver, no Gemini trip.
+  // Plain Start — straight to the park, no Gemini trip.
   const handleStart = () => {
     setScreen('nav')
   }
@@ -76,7 +76,7 @@ export function GoogleMapsClone() {
   const stopsVisible = aiSheetOpen || (tripActive && screen === 'nav')
   const sheetMode = tripActive && screen === 'nav' ? 'active' : 'plan'
   // Preview always shows the full SEA→VAN corridor; once the road trip is
-  // active, nav routes to the chosen first stop instead of Vancouver.
+  // active, nav routes to the chosen first stop instead of the park.
   const mapDest = tripActive && screen === 'nav' ? navForStop(selectedStop) : TRIP_DEST
   const navEta = tripActive ? navEtaForStop(selectedStop) : NAV_ETA
 

@@ -15,7 +15,7 @@ import { theme, tokens } from './theme'
 
 type Screen = 'lists' | 'listDetail' | 'roadtrip' | 'preview' | 'nav'
 
-// Iteration 13 — the Road Trip Jam. The fam's shared "Skagit Valley" list lives
+// Iteration 13 — the Road Trip Jam. The fam's shared "Olympic National Park" list lives
 // under the "You" tab; opening it shows the collaborative itinerary with a
 // "Start a road trip" CTA that drops into a road-trip mode map (every marked
 // place as a photo pin). Picking one previews the drive, Start begins nav, and
@@ -54,7 +54,7 @@ export function GoogleMapsClone() {
     setSnap('full')
   }
 
-  const openSkagit = () => {
+  const openRoadTrip = () => {
     setSnap('peek')
     setScreen('listDetail')
   }
@@ -104,7 +104,7 @@ export function GoogleMapsClone() {
 
         {screen === 'lists' && (
           <>
-            <YouListsSheet onOpenSkagit={openSkagit} />
+            <YouListsSheet onOpenRoadTrip={openRoadTrip} />
             <BottomNav activeTab="you" onSelectTab={() => {}} />
           </>
         )}

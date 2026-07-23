@@ -1,40 +1,53 @@
 // Iteration 15 — the "Ask Maps" AI search inside the shared itinerary. One
-// scripted exchange: a complex food query answered with two cafe picks along
-// the drive. Photos are the exact crops from the Figma frames, committed as
-// local assets (the MCP asset URLs expire).
+// scripted exchange: a complex food query answered with two taco restaurant picks
+// along the drive to Olympic National Park. Photos are Unsplash assets for Mexican
+// and taco cuisine.
 
-import { CONTRIBUTORS, TRIP_PLACES, type TripPlace } from './tripData'
-import ladro1 from './assets/ladro-1.jpg'
-import ladro2 from './assets/ladro-2.jpg'
-import ladro3 from './assets/ladro-3.jpg'
-import herkimer1 from './assets/herkimer-1.jpg'
-import herkimer2 from './assets/herkimer-2.jpg'
-import herkimer3 from './assets/herkimer-3.jpg'
+import { CONTRIBUTORS, type TripPlace } from './tripData'
+
+// Unsplash CDN for taco restaurant imagery
+const img = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=500&q=70`
 
 export const ASK_PLACEHOLDER = 'Find restaurants'
 
 // The demo query from the Figma flow — typed by the user, echoed as the bubble.
-export const ASK_DEMO_QUERY = 'Food 10 min detour, no egg'
+export const ASK_DEMO_QUERY = 'Best tacos nearby'
 
 export const ASK_RESPONSE =
-  'Discovered 2 fantastic cafes on your way to Skagit Valley — Cafe Ladro is the nearest, roughly 30 minutes ahead with a 10-minute detour. Tap one for more details.'
+  'Discovered 2 fantastic taco spots on your way to Olympic National Park — El Taco Fresco is the nearest, roughly 25 minutes ahead. Tap one for more details.'
 
-// Herkimer Coffee isn't on the shared list — Ask Maps surfaces it fresh. It
-// still carries the full TripPlace shape so RoutePreview / nav work untouched.
-export const HERKIMER_COFFEE: TripPlace = {
-  id: 'herkimer-coffee',
-  name: 'Herkimer Coffee',
-  category: 'Cafe',
-  detail: 'Neighborhood roaster · Greenwood',
+// Two taco restaurants aren't on the shared list — Ask Maps surfaces them fresh. They
+// still carry the full TripPlace shape so RoutePreview / nav work untouched.
+export const EL_TACO_FRESCO: TripPlace = {
+  id: 'el-taco-fresco',
+  name: 'El Taco Fresco',
+  category: 'Restaurants',
+  detail: 'Street tacos · Authentic Mexican · Tacoma',
+  rating: 4.8,
+  reviewCount: 512,
+  markedBy: CONTRIBUTORS[1], // Kelley
+  photo: img('1565299585323-38d6b0865b47'), // lime squeezed over street tacos
+  lngLat: [-122.4443, 47.2379],
+  driveTime: '25 min',
+  arriveTime: 'Arrive 2:25 PM',
+  tripMeta: '30 mi · 2:25 PM',
+  bannerRoad: 'WA-16 W',
+}
+
+export const BAJA_FISH_TACOS: TripPlace = {
+  id: 'baja-fish-tacos',
+  name: 'Baja Fish Tacos',
+  category: 'Restaurants',
+  detail: 'Fresh fish tacos · Hood Canal · Shelton',
   rating: 4.7,
-  reviewCount: 389,
-  markedBy: CONTRIBUTORS[2], // Josephine
-  photo: herkimer1,
-  lngLat: [-122.3553, 47.6908],
-  driveTime: '35 min',
-  arriveTime: 'Arrive 5:43 PM',
-  tripMeta: '9 mi · 5:43 PM',
-  bannerRoad: 'Aurora Ave N',
+  reviewCount: 445,
+  markedBy: CONTRIBUTORS[3], // Winnie
+  photo: img('1551504734-5ee1c4a1479b'), // top-down tacos on a plate
+  lngLat: [-123.1, 47.2154],
+  driveTime: '55 min',
+  arriveTime: 'Arrive 2:55 PM',
+  tripMeta: '58 mi · 2:55 PM',
+  bannerRoad: 'US-101 N',
 }
 
 export interface AskResult {
@@ -45,13 +58,21 @@ export interface AskResult {
 
 export const ASK_RESULTS: AskResult[] = [
   {
-    place: TRIP_PLACES.find((place) => place.id === 'cafe-ladro')!,
-    subtitle: 'Cozy espresso bar · 20 min away',
-    photos: [ladro1, ladro2, ladro3],
+    place: EL_TACO_FRESCO,
+    subtitle: 'Street tacos · 25 min away',
+    photos: [
+      img('1565299585323-38d6b0865b47'), // lime squeezed over street tacos
+      img('1552332386-f8dd00dc2f85'), // street tacos with radish
+      img('1512838243191-e81e8f66f1fd'), // gourmet tacos on a board
+    ],
   },
   {
-    place: HERKIMER_COFFEE,
-    subtitle: 'Neighborhood roaster · 35 min away',
-    photos: [herkimer1, herkimer2, herkimer3],
+    place: BAJA_FISH_TACOS,
+    subtitle: 'Fresh fish tacos · 45 min away',
+    photos: [
+      img('1551504734-5ee1c4a1479b'), // top-down tacos on a plate
+      img('1611250188496-e966043a0629'), // tacos on white plate with lime
+      img('1613514785940-daed07799d9b'), // tacos with beer
+    ],
   },
 ]

@@ -17,7 +17,7 @@ import { theme, tokens } from './theme'
 type Screen = 'nav' | 'search' | 'results' | 'preview'
 
 // Iteration 10 — "Quick Decide in a Jam". The app opens mid-drive: Kelley's
-// Jam is northbound on I-5 toward Bellingham. The nav rail's search button
+// Jam is on I-5 headed out to Olympic National Park. The nav rail's search button
 // leads to "Search along route" → Restaurants, which zooms out over the
 // corridor with rating-pill markers and a results sheet whose blue Quick
 // Decide button deals the jam a shared Tinder-style deck. The 3rd right-swipe

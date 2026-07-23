@@ -12,7 +12,7 @@ interface RoutePreviewProps {
   onMakeRoadTrip: () => void
 }
 
-// Directions overview (design.md §6.9) for Seattle → Vancouver — iteration 11's
+// Directions overview (design.md §6.9) for Seattle → Olympic National Park — iteration 11's
 // opening screen. Alongside the usual teal Start pill sits the Gemini-branded
 // "Make it a Road Trip" button, whose soft-blue face + gradient border invite
 // the AI-planned itinerary. Start and Make it a Road Trip are the wired

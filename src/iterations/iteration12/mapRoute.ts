@@ -1,5 +1,5 @@
 import mapboxgl from 'mapbox-gl'
-import { CAR_START, VANCOUVER } from './data'
+import { CAR_START, OLYMPIC_NP } from './data'
 import { tokens } from './theme'
 
 type LngLat = [number, number]
@@ -10,7 +10,7 @@ interface DrawOptions {
   onRoute?: (coords: LngLat[]) => void
 }
 
-// Fetch driving directions from Seattle up I-5 to Vancouver and draw the route
+// Fetch driving directions from Seattle out to Olympic National Park and draw the route
 // polyline. The async body is guarded because the map may unmount mid-flight.
 export function drawRoute(
   map: mapboxgl.Map,
@@ -18,7 +18,7 @@ export function drawRoute(
   layerId: string,
   options: DrawOptions = {},
 ) {
-  const coordString = `${CAR_START.join(',')};${VANCOUVER.join(',')}`
+  const coordString = `${CAR_START.join(',')};${OLYMPIC_NP.join(',')}`
   const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${coordString}?geometries=geojson&overview=full&access_token=${mapboxgl.accessToken}`
 
   fetch(url)

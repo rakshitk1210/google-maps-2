@@ -7,8 +7,9 @@ export const JAM_NAME = "Kelley's Jam"
 export const KELLEY_DISPLAY_NAME = 'Kelley'
 
 // ── Geography ────────────────────────────────────────────────────────────────
-// The jam is northbound on I-5 near NE 50th St in Seattle, headed to
-// Bellingham. Sits on the freeway itself so Directions keeps the route on I-5.
+// The jam is on I-5 near NE 50th St in Seattle, headed out to Olympic National
+// Park. Sits on the freeway itself so Directions keeps the route on I-5 before
+// it peels off onto WA-16 and US-101.
 export const PUCK_POSITION: [number, number] = [-122.3219, 47.664]
 export const NAV_ZOOM = 15.6
 
@@ -22,37 +23,41 @@ export interface NavDestination {
 }
 
 export const TRIP_DESTINATION: NavDestination = {
-  name: 'Bellingham',
-  lngLat: [-122.4787, 48.7519],
-  duration: '1 hr 55 min',
-  meta: '86 mi · 8:12 PM',
-  bannerRoad: 'I-5 N',
+  name: 'Olympic National Park',
+  lngLat: [-123.4993, 47.9686],
+  duration: '3 hr 10 min',
+  meta: '147 mi · 8:12 PM',
+  bannerRoad: 'I-5 S',
   arriveTime: 'Arrive 8:12 PM',
 }
 
 // Where the drive lands after the jam matches on Hungry Panda.
 export const MATCH_NAV: NavDestination = {
   name: 'Hungry Panda',
-  lngLat: [-122.284, 47.829],
-  duration: '21 min',
-  meta: '14 mi · 6:34 PM',
-  bannerRoad: 'Exit 181',
+  lngLat: [-122.6851, 47.5326],
+  duration: '38 min',
+  meta: '32 mi · 6:34 PM',
+  bannerRoad: 'WA-16 W',
   arriveTime: 'Arrive 6:34 PM',
 }
 
-export const ORIGIN_LABEL = 'Current location · I-5 N'
+export const ORIGIN_LABEL = 'Current location · I-5 S'
 
-// Rough I-5 N spine (Seattle → Bellingham) so the demo never shows a bare map
-// if the Directions API fails.
+// Rough I-5 / WA-16 / US-101 spine (Seattle → Olympic National Park) so the
+// demo never shows a bare map if the Directions API fails.
 export const FALLBACK_ROUTE: [number, number][] = [
   [-122.3219, 47.664],
-  [-122.328, 47.706],
-  [-122.315, 47.787],
-  [-122.285, 47.83],
-  [-122.22, 47.98],
-  [-122.33, 48.2],
-  [-122.335, 48.44],
-  [-122.4787, 48.7519],
+  [-122.3287, 47.5813],
+  [-122.4443, 47.2529],
+  [-122.5514, 47.2707],
+  [-122.6215, 47.3862],
+  [-122.6851, 47.5326],
+  [-122.9004, 47.2265],
+  [-123.1007, 47.2151],
+  [-123.1462, 47.4048],
+  [-123.0034, 48.0721],
+  [-123.4307, 48.1181],
+  [-123.4993, 47.9686],
 ]
 
 export const BANNER_TOWARD = 'toward'
@@ -87,7 +92,7 @@ const JUST_BURGERS: Restaurant = {
   openNote: 'Open',
   detourNote: '2 min away · Quick detour',
   photo: img('1504754524776-8f4f37790ca0'),
-  lngLat: [-122.323, 47.708], // Northgate
+  lngLat: [-122.3287, 47.5813], // SODO
 }
 
 const ARASHI_RAMEN: Restaurant = {
@@ -100,20 +105,20 @@ const ARASHI_RAMEN: Restaurant = {
   openNote: 'Open',
   detourNote: '4 min away',
   photo: img('1559305616-3f99cd43e353'),
-  lngLat: [-122.312, 47.787], // Mountlake Terrace
+  lngLat: [-122.4443, 47.2529], // Tacoma
 }
 
 const HUNGRY_PANDA: Restaurant = {
   id: 'hungry-panda',
   name: 'Hungry Panda',
-  tagline: 'Family-style Sichuan off Exit 181',
+  tagline: 'Family-style Sichuan off WA-16',
   rating: 4.4,
   reviewCount: 860,
   price: '$$',
   openNote: 'Open',
   detourNote: '2 min detour',
   photo: img('1481833761820-0509d3217039'),
-  lngLat: [-122.284, 47.829], // Lynnwood
+  lngLat: [-122.6851, 47.5326], // Gorst
 }
 
 const MAMA_STORTINIS: Restaurant = {
@@ -126,7 +131,7 @@ const MAMA_STORTINIS: Restaurant = {
   openNote: 'Open',
   detourNote: '6 min away',
   photo: img('1445116572660-236099ec97a0'),
-  lngLat: [-122.221, 47.889], // Ash Way / Everett
+  lngLat: [-122.6215, 47.3862], // Purdy
 }
 
 const PANDA_LA_CATRINA: Restaurant = {
@@ -139,7 +144,7 @@ const PANDA_LA_CATRINA: Restaurant = {
   openNote: 'Open',
   detourNote: '5 min away',
   photo: img('1509042239860-f550ce710b93'),
-  lngLat: [-122.202, 47.978], // deck-only, no marker
+  lngLat: [-123.1462, 47.4048], // deck-only, no marker
 }
 
 /** Rating-pill markers shown on the map along the route. */

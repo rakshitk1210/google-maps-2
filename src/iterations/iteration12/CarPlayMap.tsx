@@ -23,7 +23,7 @@ const PUCK_SVG = `
 </svg>`
 
 // Live navigation map for the CarPlay screen: the camera drives north on I-5
-// toward Vancouver so the scene reads as moving, not parked. Navigation is
+// toward Olympic National Park so the scene reads as moving, not parked. Navigation is
 // already active on load, so the route draws immediately in a close-up
 // driving view and the camera starts following it.
 export function CarPlayMap() {

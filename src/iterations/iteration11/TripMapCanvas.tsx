@@ -23,7 +23,7 @@ mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN
 
 export type MapPhase = 'preview' | 'nav'
 
-// Google-red destination pin (Vancouver).
+// Google-red destination pin (Olympic National Park).
 const DEST_PIN_SVG = `
 <svg width="34" height="44" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">
   <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20C24 5.4 18.6 0 12 0z" fill="${tokens.red}"/>
@@ -55,7 +55,7 @@ function pointAlongRoute(coords: [number, number][], meters: number): [number, n
 
 interface TripMapCanvasProps {
   phase: MapPhase
-  /** Active nav destination — Vancouver on a plain Start, stop 1 on a road-trip Start. */
+  /** Active nav destination — the park on a plain Start, stop 1 on a road-trip Start. */
   dest: NavDestination
   /** Whether the 4 road-trip stop photo markers are strung along the route. */
   stopsVisible: boolean
@@ -67,7 +67,7 @@ interface TripMapCanvasProps {
 // opening route preview through the Gemini flow and into the drive —
 // remounting would flash the style load. The puck rides a center-anchored
 // marker portal (blue dot on preview, chevron in nav); the route polyline and
-// destination pin follow `dest` (Vancouver on preview / plain Start, Snow Goose
+// destination pin follow `dest` (the park on preview / plain Start, stop 1
 // when the Gemini road trip is active).
 export function TripMapCanvas({ phase, dest, stopsVisible, sheetOpen }: TripMapCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null)
