@@ -10,18 +10,20 @@ import { RoutePreview } from './RoutePreview'
 import { NavBanner } from './NavBanner'
 import { RoadTripBadge } from './RoadTripBadge'
 import { NavBottomBar } from './NavBottomBar'
+import { AskMapsSheet } from './AskMapsSheet'
+import { FakeKeyboard } from './FakeKeyboard'
 import { CONTRIBUTABLE_PLACES, TRIP_PLACES, type TripPlace } from './tripData'
 import { theme, tokens } from './theme'
 
 type Screen = 'lists' | 'listDetail' | 'roadtrip' | 'preview' | 'nav'
 
-// Iteration 13 — the Road Trip Jam. The fam's shared "Skagit Valley" list lives
-// under the "You" tab; opening it shows the collaborative itinerary with a
-// "Start a road trip" CTA that drops into a road-trip mode map (every marked
-// place as a photo pin). Picking one previews the drive, Start begins nav, and
-// the persistent "Road Trip" chip reopens the itinerary mid-drive so the fam
-// can switch destinations — which always lands back on route preview (Start
-// again) rather than re-routing live underneath the driver.
+// Iteration 15 — Ask Maps inside the itinerary. Iteration 13's Road Trip Jam
+// (shared "Skagit Valley" list → road-trip mode → preview → nav) gains an AI
+// search entry: the gradient "Ask Maps" pill on the list sheet expands into an
+// inline query card, typing happens over a fake iOS keyboard, and submitting
+// opens a results sheet — user bubble, typewritten answer, two cafe cards.
+// A card's ↗ drops into the existing route preview, so "found by AI" places
+// navigate exactly like curated ones.
 export function GoogleMapsClone() {
   const [screen, setScreen] = useState<Screen>('lists')
   const [selectedPlace, setSelectedPlace] = useState<TripPlace | null>(null)
@@ -37,6 +39,16 @@ export function GoogleMapsClone() {
   const [justAddedId, setJustAddedId] = useState<string | null>(null)
   const addIndexRef = useRef(0)
   const hornPlayed = useRef(false)
+
+  // Ask Maps — overlay state on top of the listDetail screen. The inline card
+  // (askOpen + draft) lives up here so it survives the results → preview →
+  // back round trip; askQuery non-null means the results sheet is up.
+  const [askOpen, setAskOpen] = useState(false)
+  const [askDraft, setAskDraft] = useState('')
+  const [askQuery, setAskQuery] = useState<string | null>(null)
+  const [askKeyboard, setAskKeyboard] = useState(false)
+  const [askReturning, setAskReturning] = useState(false)
+  const cameFromAsk = useRef(false)
 
   const mode = screen === 'preview' ? 'preview' : screen === 'nav' ? 'nav' : 'overview'
 
@@ -81,10 +93,50 @@ export function GoogleMapsClone() {
     setScreen('preview')
   }
 
-  const startNav = () => setScreen('nav')
+  // ── Ask Maps ──────────────────────────────────────────────────────────────
+  const openAsk = () => {
+    setAskOpen(true)
+    // Same precedent as handleAddPlace — the card (plus keyboard, once the
+    // field focuses) needs the full sheet.
+    setSnap('full')
+  }
+
+  const closeAsk = () => {
+    setAskOpen(false)
+    setAskKeyboard(false)
+  }
+
+  const submitAsk = () => {
+    if (!askDraft.trim()) return
+    setAskQuery(askDraft.trim())
+    setAskReturning(false)
+    // Keyboard drops as the results sheet rises.
+    setAskKeyboard(false)
+  }
+
+  // A result card's ↗ — straight into the shared preview → nav flow. Remember
+  // where we came from so Back returns to the results, not the roadtrip.
+  const handleAskOpenPlace = (place: TripPlace) => {
+    cameFromAsk.current = true
+    setSelectedPlace(place)
+    setScreen('preview')
+  }
+
+  const startNav = () => {
+    // Once driving, the trip owns navigation — Back no longer returns to Ask.
+    cameFromAsk.current = false
+    setScreen('nav')
+  }
 
   const backFromPreview = () => {
     setSelectedPlace(null)
+    if (cameFromAsk.current) {
+      cameFromAsk.current = false
+      // Reopen the results sheet exactly as it was — no typewriter replay.
+      setAskReturning(true)
+      setScreen('listDetail')
+      return
+    }
     setScreen('roadtrip')
   }
 
@@ -110,20 +162,39 @@ export function GoogleMapsClone() {
         )}
 
         {screen === 'listDetail' && (
-          <ListDetailSheet
-            snap={snap}
-            onSnapChange={setSnap}
-            category={category}
-            onCategoryChange={setCategory}
-            places={places}
-            onReorder={setPlaces}
-            justAddedId={justAddedId}
-            onAnimatedIn={() => setJustAddedId(null)}
-            onClose={closeListDetail}
-            onStartRoadtrip={startRoadtrip}
-            onAddPlace={handleAddPlace}
-            onDirections={handleDirections}
-          />
+          <>
+            <ListDetailSheet
+              snap={snap}
+              onSnapChange={setSnap}
+              category={category}
+              onCategoryChange={setCategory}
+              places={places}
+              onReorder={setPlaces}
+              justAddedId={justAddedId}
+              onAnimatedIn={() => setJustAddedId(null)}
+              onClose={closeListDetail}
+              onStartRoadtrip={startRoadtrip}
+              onAddPlace={handleAddPlace}
+              onDirections={handleDirections}
+              askOpen={askOpen}
+              askDraft={askDraft}
+              onAskDraftChange={setAskDraft}
+              onAskOpen={openAsk}
+              onAskClose={closeAsk}
+              onAskFocus={() => setAskKeyboard(true)}
+              onAskSubmit={submitAsk}
+            />
+            {/* Results sheet + fake keyboard overlay the list sheet; both stay
+                mounted so their translateY slides animate in and out. */}
+            <AskMapsSheet
+              open={askQuery !== null}
+              query={askQuery}
+              skipAnimation={askReturning}
+              onOpenPlace={handleAskOpenPlace}
+              onClose={() => setAskQuery(null)}
+            />
+            <FakeKeyboard visible={askKeyboard} />
+          </>
         )}
 
         {screen === 'preview' && selectedPlace && (

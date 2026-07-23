@@ -11,6 +11,8 @@ import { GoogleMapsClone as GoogleMapsCloneV10 } from '../iterations/iteration10
 import { GoogleMapsClone as GoogleMapsCloneV11 } from '../iterations/iteration11/GoogleMapsClone'
 import { GoogleMapsClone as GoogleMapsCloneV12 } from '../iterations/iteration12/GoogleMapsClone'
 import { GoogleMapsClone as GoogleMapsCloneV13 } from '../iterations/iteration13/GoogleMapsClone'
+import { GoogleMapsClone as GoogleMapsCloneV14 } from '../iterations/iteration14/GoogleMapsClone'
+import { GoogleMapsClone as GoogleMapsCloneV15 } from '../iterations/iteration15/GoogleMapsClone'
 
 interface PhoneFrameProps {
   iterationId: number
@@ -23,6 +25,9 @@ export function PhoneFrame({ iterationId }: PhoneFrameProps) {
 
   // Iteration 12 is a solo CarPlay head-unit stage — same early return.
   if (iterationId === 12) return <GoogleMapsCloneV12 />
+
+  // Iteration 14 is also a solo CarPlay head-unit stage.
+  if (iterationId === 14) return <GoogleMapsCloneV14 />
 
   return (
     <div className="phone-frame">
@@ -37,6 +42,7 @@ export function PhoneFrame({ iterationId }: PhoneFrameProps) {
       {iterationId === 10 && <GoogleMapsCloneV10 />}
       {iterationId === 11 && <GoogleMapsCloneV11 />}
       {iterationId === 13 && <GoogleMapsCloneV13 />}
+      {iterationId === 15 && <GoogleMapsCloneV15 />}
     </div>
   )
 }

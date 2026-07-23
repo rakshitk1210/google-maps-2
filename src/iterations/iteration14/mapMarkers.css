@@ -1,0 +1,46 @@
+/* Decorative map-surface markers for the CarPlay road-trip views. Per
+   design.md rule 0.10 these live on the map, so they're the only elements
+   carrying shadows. */
+
+.car-marker-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Map-pin element — shadow is allowed here per design.md rule 0.10. */
+.nav-puck {
+  display: block;
+  filter: drop-shadow(0 1px 2px rgba(60, 64, 67, 0.35)) drop-shadow(0 2px 6px rgba(60, 64, 67, 0.2));
+}
+
+.map-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+/* Mapbox owns the root .dest-pin element's transform for positioning, so the
+   drop-in animation lives on the inner wrapper (iteration 7's gem-pin lesson). */
+
+.dest-pin {
+  pointer-events: none;
+  display: flex;
+}
+
+.dest-pin-inner {
+  display: flex;
+  filter: drop-shadow(0 2px 3px rgba(60, 64, 67, 0.4));
+  animation: dest-pin-drop 360ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes dest-pin-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

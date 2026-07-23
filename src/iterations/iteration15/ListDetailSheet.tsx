@@ -11,6 +11,8 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import { ContributorAvatars } from './ContributorAvatars'
 import { CategoryChips } from './CategoryChips'
 import { PlaceCard } from './PlaceCard'
+import { AskMapsCard } from './AskMapsCard'
+import { AskSpark } from './AskSpark'
 import { TRIP_TITLE, type TripPlace } from './tripData'
 import { MOTION_EMPHASIZED, tokens } from './theme'
 import { useDragReorder } from './useDragReorder'
@@ -37,6 +39,18 @@ interface ListDetailSheetProps {
   onAddPlace: () => void
   /** A place's directions button — jumps straight to route preview. */
   onDirections: (place: TripPlace) => void
+  /** Whether the inline Ask Maps card is expanded (the pill hides meanwhile). */
+  askOpen: boolean
+  askDraft: string
+  onAskDraftChange: (draft: string) => void
+  /** Ask Maps pill — expands the inline card and snaps the sheet full. */
+  onAskOpen: () => void
+  /** The card's ✕ — collapse it and bring the pill back. */
+  onAskClose: () => void
+  /** Field focus — the parent slides the fake keyboard up. */
+  onAskFocus: () => void
+  /** Enter / send — opens the Ask Maps results sheet. */
+  onAskSubmit: () => void
 }
 
 /** Visible header at peek: handle + circle actions + title + meta + pills. */
@@ -71,12 +85,12 @@ function CircleAction({ children, onClick }: { children: ReactNode; onClick?: ()
   )
 }
 
-// The collaborative list-detail sheet (iteration 13). Draggable like the
+// The collaborative list-detail sheet (iteration 15). Draggable like the
 // itinerary sheet (peek ↔ full) but topped with the list chrome: emoji header,
 // ⋯/share/✕ circle actions, the shared-list title, contributor stack + meta,
-// and the action-pill row whose single dark-teal CTA — "Start a road trip" —
-// drops the fam into road-trip mode. Below the drag surface the category chips
-// and "Marked by X" place cards scroll once the sheet is fully open.
+// and the action-pill row — now led by the gradient "Ask Maps" pill that
+// swaps itself for the inline AI search card. Below the drag surface the
+// category chips and "Marked by X" place cards scroll once fully open.
 export function ListDetailSheet({
   snap,
   onSnapChange,
@@ -90,6 +104,13 @@ export function ListDetailSheet({
   onStartRoadtrip,
   onAddPlace,
   onDirections,
+  askOpen,
+  askDraft,
+  onAskDraftChange,
+  onAskOpen,
+  onAskClose,
+  onAskFocus,
+  onAskSubmit,
 }: ListDetailSheetProps) {
   const rootRef = useRef<HTMLDivElement>(null)
   const [frameH, setFrameH] = useState(0)
@@ -232,8 +253,9 @@ export function ListDetailSheet({
           You, Kelley +2 · {places.length} places
         </Typography>
 
-        {/* Action pills — Start a road trip is the single dark-teal CTA.
-            Stop propagation so tapping a pill doesn't start a sheet drag. */}
+        {/* Action pills — the gradient Ask Maps pill leads; it collapses away
+            while the inline card below is open. Stop propagation so tapping a
+            pill doesn't start a sheet drag. */}
         <Box
           onPointerDown={(e) => e.stopPropagation()}
           sx={{
@@ -248,25 +270,36 @@ export function ListDetailSheet({
             '&::-webkit-scrollbar': { display: 'none' },
           }}
         >
-          <ButtonBase
+          <Box
             sx={{
-              height: 44,
-              px: '16px',
-              borderRadius: 999,
               flexShrink: 0,
-              whiteSpace: 'nowrap',
-              bgcolor: tokens.cyanContainer,
-              color: tokens.onCyan,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
+              overflow: 'hidden',
+              maxWidth: askOpen ? 0 : 140,
+              opacity: askOpen ? 0 : 1,
+              // Swallow the row gap too, so the remaining pills close ranks.
+              mr: askOpen ? '-10px' : 0,
+              transition: `max-width 320ms ${MOTION_EMPHASIZED}, opacity 320ms ${MOTION_EMPHASIZED}, margin-right 320ms ${MOTION_EMPHASIZED}`,
+              pointerEvents: askOpen ? 'none' : 'auto',
             }}
           >
-            <PersonAddAltIcon sx={{ fontSize: 20 }} />
-            <Typography sx={{ fontSize: 15, fontWeight: 500, color: tokens.onCyan }}>
-              Invite collaborators
-            </Typography>
-          </ButtonBase>
+            <ButtonBase
+              onClick={onAskOpen}
+              sx={{
+                height: 44,
+                pl: '14px',
+                pr: '16px',
+                borderRadius: 999,
+                whiteSpace: 'nowrap',
+                background: 'linear-gradient(90deg, #4285F4 0%, #9B72CB 50%, #D96570 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+              }}
+            >
+              <AskSpark size={20} tone="white" />
+              <Typography sx={{ fontSize: 16, fontWeight: 500, color: '#fff' }}>Ask Maps</Typography>
+            </ButtonBase>
+          </Box>
 
           <ButtonBase
             onClick={onAddPlace}
@@ -288,6 +321,26 @@ export function ListDetailSheet({
           </ButtonBase>
 
           <ButtonBase
+            sx={{
+              height: 44,
+              px: '16px',
+              borderRadius: 999,
+              flexShrink: 0,
+              whiteSpace: 'nowrap',
+              bgcolor: tokens.cyanContainer,
+              color: tokens.onCyan,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            <PersonAddAltIcon sx={{ fontSize: 20 }} />
+            <Typography sx={{ fontSize: 15, fontWeight: 500, color: tokens.onCyan }}>
+              Invite friends
+            </Typography>
+          </ButtonBase>
+
+          <ButtonBase
             onClick={onStartRoadtrip}
             sx={{
               height: 44,
@@ -305,6 +358,20 @@ export function ListDetailSheet({
             <DirectionsCarFilledIcon sx={{ fontSize: 20 }} />
             <Typography sx={{ fontSize: 15, fontWeight: 600, color: '#fff' }}>Start a road trip</Typography>
           </ButtonBase>
+        </Box>
+
+        {/* Inline Ask Maps card — expands below the pills, pushing the chips
+            and list down. Inside the drag surface, so stop pointer propagation
+            or typing in the field would start a sheet drag. */}
+        <Box onPointerDown={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
+          <AskMapsCard
+            open={askOpen}
+            draft={askDraft}
+            onDraftChange={onAskDraftChange}
+            onClose={onAskClose}
+            onFocus={onAskFocus}
+            onSubmit={onAskSubmit}
+          />
         </Box>
       </Box>
 
