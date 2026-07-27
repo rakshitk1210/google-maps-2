@@ -1,0 +1,156 @@
+/* Iteration 16 map pins — a circular place photo with a small white tail and
+   the place name set beside it, straight from the Figma frames. Per design.md
+   rule 0.10 these live on the map surface, so they're the only elements here
+   carrying shadows ("Elevation/Map Pin").
+
+   Every dimension is derived from --nc-pin, which TripMapCanvas rewrites on the
+   map container as the camera zooms: 32px at the trip overview (the Figma size)
+   growing toward 88px close in, so zooming into a place actually shows you more
+   of its photo instead of the same thumbnail. Only the geometry scales — the
+   name's type grows a little and then stops, since a giant label would fight
+   the map's own labels.
+
+   Mapbox owns the root element's transform for positioning, so the pop-in
+   animation lives on the inner wrapper (iteration 7's gem-pin lesson). The
+   root's box is only the circle + tail and the label floats beside it
+   absolutely, which lets anchor: 'bottom' land the tail tip exactly on the
+   coordinate no matter how long the name is or how large the pin has grown. */
+
+/* The default lives on the map container, not on .nc-marker — a declaration on
+   the marker itself would shadow the value TripMapCanvas writes here as an
+   inline style, and the pins would never resize. */
+.nc-map {
+  --nc-pin: 32px;
+}
+
+.nc-marker {
+  cursor: pointer;
+  /* Restaurant pins fade in and trip pins fade back under the filter. */
+  transition: opacity 300ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* !important because mapbox-gl writes marker opacity as an inline style (its
+   terrain-occlusion fade), which would otherwise always win over this class. */
+.nc-marker.nc-dimmed {
+  opacity: 0.25 !important;
+}
+
+.nc-marker-inner {
+  position: relative;
+  width: var(--nc-pin);
+  height: calc(var(--nc-pin) + 4px);
+  animation: nc-marker-pop 340ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+/* Shadow wraps only the photo + tail — a drop-shadow on the whole inner would
+   smear the name text too. */
+.nc-marker-pin {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(0 1px 1px rgba(60, 64, 67, 0.3)) drop-shadow(0 2px 3px rgba(60, 64, 67, 0.15));
+}
+
+.nc-marker-photo {
+  width: var(--nc-pin);
+  height: var(--nc-pin);
+  border-radius: 50%;
+  /* The ring thickens with the pin so it stays a hairline, never a hoop. */
+  border: clamp(1px, calc(var(--nc-pin) / 24), 3px) solid #ffffff;
+  box-sizing: border-box;
+  object-fit: cover;
+  display: block;
+  background: #e8eaed;
+}
+
+.nc-marker-tail {
+  position: absolute;
+  left: calc(var(--nc-pin) / 2 - 3px);
+  top: calc(var(--nc-pin) - 1px);
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 5px solid #ffffff;
+}
+
+/* The label's metrics are linear ramps in --nc-pin, each anchored so it hits the
+   Figma value at the 32px overview pin and its ceiling at the 88px close-in pin.
+   A plain multiple of --nc-pin doesn't work here: 0.2 × pin only clears the 11px
+   floor once the pin passes 55px, which leaves the type frozen while the photo
+   grows through the whole middle of the zoom range. */
+.nc-marker-label {
+  position: absolute;
+  /* Gap 3 → 9px. 3px reads as touching next to an 88px circle. */
+  left: calc(var(--nc-pin) + clamp(3px, calc(var(--nc-pin) * 0.107 - 0.4px), 9px));
+  top: 0;
+  /* Measure 90 → 150px, so a two-word name stops wrapping once there's room.
+     Capped so a long name can't run off the frame at high zoom. */
+  width: clamp(90px, calc(var(--nc-pin) * 1.07 + 56px), 150px);
+  height: var(--nc-pin);
+  display: flex;
+  align-items: center;
+  font-family: 'Google Sans Flex', 'Google Sans', Roboto, sans-serif;
+  /* Type 11 → 18px: it tracks the pin but deliberately more slowly than the
+     photo does. Holding the Figma's 11/32 ratio would put this at 30px, which
+     would shout over the map's own labels. */
+  font-size: clamp(11px, calc(var(--nc-pin) * 0.125 + 7px), 18px);
+  font-weight: 400;
+  line-height: 1.3;
+  /* em, not px — tracking tuned for 11px over-tightens at 18px. */
+  letter-spacing: -0.03em;
+  color: #202124;
+  /* Map labels need to survive both the pale land fill and the dark water, so
+     they carry the same white halo real Google Maps labels do. The halo has to
+     grow with the type or it stops covering the glyph edges. */
+  text-shadow:
+    0 0 clamp(3px, calc(var(--nc-pin) * 0.054 + 1.3px), 6px) rgba(255, 255, 255, 0.95),
+    0 1px clamp(2px, calc(var(--nc-pin) * 0.036 + 0.85px), 4px) rgba(255, 255, 255, 0.95);
+}
+
+/* Saved places wear a small filled bookmark badge so the pin itself carries
+   the "this is in the trip now" state. */
+.nc-marker-saved-badge {
+  position: absolute;
+  /* Rides the photo's upper-right edge whatever size the pin is. */
+  left: calc(var(--nc-pin) - clamp(10px, var(--nc-pin) * 0.3, 22px));
+  top: calc(-1 * clamp(3px, var(--nc-pin) * 0.09, 8px));
+  width: clamp(15px, calc(var(--nc-pin) * 0.42), 30px);
+  height: clamp(15px, calc(var(--nc-pin) * 0.42), 30px);
+  border-radius: 50%;
+  background: #0d5c63;
+  border: 1.5px solid #ffffff;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: nc-badge-pop 260ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.nc-marker-saved-badge svg {
+  width: 55%;
+  height: 55%;
+  display: block;
+  fill: #ffffff;
+}
+
+@keyframes nc-marker-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes nc-badge-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

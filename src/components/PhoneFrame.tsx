@@ -13,6 +13,8 @@ import { GoogleMapsClone as GoogleMapsCloneV12 } from '../iterations/iteration12
 import { GoogleMapsClone as GoogleMapsCloneV13 } from '../iterations/iteration13/GoogleMapsClone'
 import { GoogleMapsClone as GoogleMapsCloneV14 } from '../iterations/iteration14/GoogleMapsClone'
 import { GoogleMapsClone as GoogleMapsCloneV15 } from '../iterations/iteration15/GoogleMapsClone'
+import { GoogleMapsClone as GoogleMapsCloneV16 } from '../iterations/iteration16/GoogleMapsClone'
+import { GoogleMapsClone as GoogleMapsCloneV17 } from '../iterations/iteration17/GoogleMapsClone'
 
 interface PhoneFrameProps {
   iterationId: number
@@ -43,6 +45,8 @@ export function PhoneFrame({ iterationId }: PhoneFrameProps) {
       {iterationId === 11 && <GoogleMapsCloneV11 />}
       {iterationId === 13 && <GoogleMapsCloneV13 />}
       {iterationId === 15 && <GoogleMapsCloneV15 />}
+      {iterationId === 16 && <GoogleMapsCloneV16 />}
+      {iterationId === 17 && <GoogleMapsCloneV17 />}
     </div>
   )
 }

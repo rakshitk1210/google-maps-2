@@ -1,0 +1,68 @@
+/* Iteration 17 map-surface elements. Per design.md rule 0.10 these live on the
+   map, so they're the only things here carrying shadows.
+
+   Mapbox owns each marker root's transform for positioning, so entrance
+   animations live on an inner wrapper (iteration 7's gem-pin lesson). */
+
+/* The Cafe Ladro billboard standing beside the road. The canvas disables
+   pointer events on markers wholesale so map gestures pass through the puck;
+   this one is the exception — it's the whole interaction. */
+.iter17-billboard {
+  cursor: pointer;
+  pointer-events: auto !important;
+}
+
+.iter17-billboard-inner {
+  display: block;
+  animation: iter17-billboard-in 420ms cubic-bezier(0.2, 0, 0, 1) both;
+  transition: transform 160ms cubic-bezier(0.2, 0, 0, 1);
+  transform-origin: bottom center;
+}
+
+.iter17-billboard:hover .iter17-billboard-inner,
+.iter17-billboard:active .iter17-billboard-inner {
+  transform: scale(1.04);
+}
+
+.iter17-billboard-inner img {
+  display: block;
+  width: 171px;
+  height: auto;
+  /* The PNG already carries its own soft ground shadow, so this only needs to
+     lift the card off the map a little. */
+  filter: drop-shadow(0 2px 6px rgba(60, 64, 67, 0.22));
+}
+
+@keyframes iter17-billboard-in {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Destination pin dropped over the café while previewing the detour. */
+.iter17-dest-pin {
+  pointer-events: none;
+  display: flex;
+}
+
+.iter17-dest-pin-inner {
+  display: flex;
+  filter: drop-shadow(0 2px 3px rgba(60, 64, 67, 0.4));
+  animation: iter17-pin-drop 360ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes iter17-pin-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
